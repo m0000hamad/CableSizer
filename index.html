@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WireCalc - Wire Size Calculator</title>
+    <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/2910/2910791.png" type="image/png">
+    <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/2910/2910791.png">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-title" content="WireCalc">
+    <style>
+        body {
+            font-family: Tahoma, sans-serif;
+            direction: rtl;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            background-color: white;
+            border-radius: 12px;
+            max-width: 100%;
+            width: 100%;
+            box-sizing: border-box;
+            margin: auto;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h2 {
+            text-align: center;
+            color: #2c3e50;
+        }
+        label {
+            display: block;
+            margin-top: 15px;
+            font-size: 14px;
+        }
+        input, select {
+            width: 100%;
+            padding: 10px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            margin-top: 5px;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #2980b9;
+            color: white;
+            padding: 12px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-top: 20px;
+            width: 100%;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #3498db;
+        }
+        #result {
+            margin-top: 20px;
+            text-align: center;
+            color: #16a085;
+            font-size: 18px;
+        }
+        .wire-visual {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .wire {
+            height: 40px;
+            background-color: #bdc3c7;
+            border-radius: 20px;
+            transition: width 0.3s ease;
+        }
+        .footer {
+            margin-top: 40px;
+            text-align: center;
+            font-size: 14px;
+            color: gray;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>محاسبه سطح مقطع سیم</h2>
+        <label>طول مسیر (متر): <input type="text" id="length" inputmode="decimal" /></label>
+        <label>توان مصرف‌کننده (کیلووات): <input type="text" id="power" inputmode="decimal" /></label>
+        <label>نوع برق:
+            <select id="phase">
+                <option value="single">تک‌فاز</option>
+                <option value="three">سه‌فاز</option>
+            </select>
+        </label>
+        <label>نوع سیم:
+            <select id="material">
+                <option value="copper">مس</option>
+                <option value="aluminum">آلومینیوم</option>
+            </select>
+        </label>
+        <button onclick="calculate()">محاسبه</button>
+        <h3 id="result"></h3>
+        <div class="wire-visual">
+            <div id="wireShape" class="wire"></div>
+        </div>
+    </div>
+    <div class="footer">این ابزار توسط محمد نریموسایی طراحی و برنامه‌نویسی شده است.</div>
+
+    <script>
+        function parseInput(id) {
+            const value = document.getElementById(id).value.replace(',', '.');
+            return parseFloat(value);
+        }
+
+        function calculate() {
+            const length = parseInput("length");
+            const power = parseInput("power");
+            const phase = document.getElementById("phase").value;
+            const material = document.getElementById("material").value;
+
+            if (isNaN(length) || isNaN(power) || length <= 0 || power <= 0) {
+                document.getElementById("result").innerText = "لطفاً مقدار معتبر وارد کنید.";
+                return;
+            }
+
+            const voltage = phase === "single" ? 220 : 400;
+            const resistivity = material === "copper" ? 0.0175 : 0.0282;
+
+            const current = phase === "three"
+                ? (power * 1000) / (Math.sqrt(3) * voltage)
+                : (power * 1000) / voltage;
+
+            const voltageDrop = voltage * 0.05;
+            const multiplier = phase === "single" ? 2 : Math.sqrt(3);
+
+            const area = (multiplier * length * current * resistivity) / voltageDrop;
+            const roundedArea = area.toFixed(2);
+
+            document.getElementById("result").innerText =
+                `سطح مقطع مورد نیاز سیم: ${roundedArea} میلیمتر مربع`;
+
+            const wire = document.getElementById("wireShape");
+            const diameter = Math.sqrt(area / Math.PI) * 2;
+            const displayWidth = Math.min(Math.max(diameter * 4, 20), 400);
+            wire.style.width = `${displayWidth}px`;
+        }
+    </script>
+</body>
+</html>
