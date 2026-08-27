@@ -141,6 +141,7 @@
                 <option value="aluminum">آلومینیوم</option>
             </select>
         </label>
+        <label>دمای محیط (درجه سانتیگراد): <input type="text" id="ambientTemp" inputmode="decimal" autocomplete="off" placeholder="پیش‌فرض: 20" /></label>
         <button onclick="calculate()">محاسبه</button>
         <h3 id="result"></h3>
         <div class="wire-visual">
@@ -158,12 +159,19 @@
             const power = parseInput("power");
             const phase = document.getElementById("phase").value;
             const material = document.getElementById("material").value;
+            let ambientTemp = parseInput("ambientTemp");
+            if (isNaN(ambientTemp)) ambientTemp = 20;
             if (isNaN(length) || isNaN(power) || length <= 0 || power <= 0) {
                 document.getElementById("result").innerText = "لطفاً مقدار معتبر وارد کنید.";
                 return;
             }
             const voltage = phase === "single" ? 220 : 400;
-            const resistivity = material === "copper" ? 0.0175 : 0.0282;
+            // مقاومت مخصوص در دمای مرجع ۲۰ درجه سانتیگراد
+            const baseResistivity = material === "copper" ? 0.0175 : 0.0282;
+            // ضریب دمایی مقاومت (بر حسب هر درجه سانتیگراد نسبت به ۲۰ درجه)
+            const tempCoefficient = material === "copper" ? 0.00393 : 0.00403;
+            // اصلاح مقاومت مخصوص بر اساس دمای محیط، چون مقاومت هادی با افزایش دما بیشتر می‌شود
+            const resistivity = baseResistivity * (1 + tempCoefficient * (ambientTemp - 20));
             const current = phase === "three"
                 ? (power * 1000) / (Math.sqrt(3) * voltage)
                 : (power * 1000) / voltage;
@@ -172,7 +180,7 @@
             const area = (multiplier * length * current * resistivity) / voltageDrop;
             const roundedArea = area.toFixed(2);
             document.getElementById("result").innerText =
-                `سطح مقطع مورد نیاز سیم: ${roundedArea} میلیمتر مربع`;
+                `سطح مقطع مورد نیاز سیم: ${roundedArea} میلیمتر مربع (با احتساب دمای محیط ${ambientTemp}°C)`;
             const wire = document.getElementById("wireShape");
             const diameter = Math.sqrt(area / Math.PI) * 2;
             const displayWidth = Math.min(Math.max(diameter * 4, 20), 400);
