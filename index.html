@@ -1,183 +1,1082 @@
 <!DOCTYPE html>
-<html lang="fa">
+<html lang="fa" dir="rtl" data-theme="light">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WireCalc - Wire Size Calculator</title>
-    <!-- سوشال و favicon اختصاصی و حرفه‌ای -->
-    <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/3103/3103446.png" type="image/png">
-    <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/3103/3103446.png">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-title" content="WireCalc">
-    <!-- سوشال برای اشتراک‌گذاری -->
-    <meta property="og:title" content="WireCalc | Wire Size Calculator">
-    <meta property="og:description" content="محاسبه آنلاین سطح مقطع سیم بر اساس طول، توان، نوع سیم و نوع فاز - مناسب مهندسین برق">
-    <meta property="og:image" content="https://cdn-icons-png.flaticon.com/512/3103/3103446.png">
-    <meta property="og:type" content="website">
-    <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="WireCalc">
-    <meta name="twitter:description" content="محاسبه آنلاین سطح مقطع سیم">
-    <meta name="twitter:image" content="https://cdn-icons-png.flaticon.com/512/3103/3103446.png">
-    <style>
-        body {
-            font-family: Tahoma, sans-serif;
-            direction: rtl;
-            background-color: #f5f5f5;
-            margin: 0;
-            padding: 0;
-        }
-        .container {
-            background-color: white;
-            border-radius: 16px;
-            max-width: 400px;
-            margin: 32px auto;
-            padding: 24px 16px 32px 16px;
-            box-shadow: 0 4px 28px 0 rgba(0,0,0,0.10);
-        }
-        .app-icon {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-bottom: 12px;
-        }
-        .app-icon img {
-            width: 56px;
-            height: 56px;
-            border-radius: 16px;
-            box-shadow: 0 2px 8px rgba(44,62,80,0.13);
-        }
-        h2 {
-            text-align: center;
-            color: #2c3e50;
-            margin-top: 0;
-            font-size: 1.4rem;
-        }
-        label {
-            display: block;
-            margin-top: 18px;
-            font-size: 1rem;
-        }
-        input, select {
-            width: 100%;
-            padding: 12px;
-            border-radius: 8px;
-            border: 1px solid #ccc;
-            margin-top: 7px;
-            box-sizing: border-box;
-            font-size: 1rem;
-            background: #fafbfc;
-            outline: none;
-        }
-        button {
-            background-color: #ffbb33;
-            color: #222;
-            padding: 14px;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            margin-top: 28px;
-            width: 100%;
-            font-size: 1.08rem;
-            font-weight: 600;
-            transition: background 0.15s;
-            box-shadow: 0 2px 12px 0 rgba(255,187,51,0.08);
-        }
-        button:hover, button:active {
-            background-color: #ffaa00;
-        }
-        #result {
-            margin-top: 24px;
-            text-align: center;
-            color: #009966;
-            font-size: 1.13rem;
-        }
-        .wire-visual {
-            margin-top: 18px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 40px;
-        }
-        .wire {
-            height: 34px;
-            background: linear-gradient(90deg, #ffa600 0%, #f4d03f 60%, #bdc3c7 100%);
-            border-radius: 17px;
-            transition: width 0.3s cubic-bezier(.2,.6,.36,1);
-        }
-        .footer {
-            margin-top: 36px;
-            text-align: center;
-            font-size: 13px;
-            color: #888;
-        }
-        @media (max-width: 600px) {
-            .container {
-                max-width: 97vw;
-                margin: 14px auto;
-                padding: 12px 2vw 20px 2vw;
-            }
-            h2 { font-size: 1.1rem; }
-            input, select, button { font-size: .97rem; }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CableSizer — محاسبه‌گر سطح مقطع کابل</title>
+
+<meta name="description" content="محاسبه‌گر آنلاین سطح مقطع کابل و سیم بر اساس افت ولتاژ و ظرفیت جریان‌دهی، با اعمال دمای محیط، روش نصب و ضریب تجمع — مطابق IEC 60364-5-52.">
+<meta name="author" content="m0000hamad">
+<meta name="theme-color" content="#0f766e">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="CableSizer — Cable Size Calculator">
+<meta property="og:description" content="Size cables by voltage drop and current-carrying capacity, with ambient temperature, installation method and grouping derating (IEC 60364-5-52).">
+<meta property="og:url" content="https://m0000hamad.github.io/CableSizer/">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="CableSizer">
+<meta name="twitter:description" content="Cable size calculator for electrical engineers.">
+
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230f766e'/%3E%3Ccircle cx='32' cy='32' r='17' fill='none' stroke='%23f5b301' stroke-width='6'/%3E%3Ccircle cx='32' cy='32' r='7' fill='%23f5b301'/%3E%3C/svg%3E">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+/* ---------- design tokens ---------- */
+:root{
+  --bg:#f1f5f9;
+  --surface:#ffffff;
+  --surface-2:#f8fafc;
+  --border:#e2e8f0;
+  --text:#0f172a;
+  --text-muted:#64748b;
+  --accent:#0f766e;
+  --accent-soft:#ccfbf1;
+  --accent-strong:#115e59;
+  --amber:#f5b301;
+  --danger:#dc2626;
+  --danger-soft:#fee2e2;
+  --warn:#b45309;
+  --warn-soft:#fef3c7;
+  --ok:#15803d;
+  --ok-soft:#dcfce7;
+  --shadow:0 1px 2px rgba(15,23,42,.06), 0 8px 24px rgba(15,23,42,.06);
+  --radius:14px;
+}
+[data-theme="dark"]{
+  --bg:#0b1220;
+  --surface:#111a2b;
+  --surface-2:#0f1727;
+  --border:#1e293b;
+  --text:#e2e8f0;
+  --text-muted:#94a3b8;
+  --accent:#2dd4bf;
+  --accent-soft:#134e4a;
+  --accent-strong:#5eead4;
+  --amber:#fbbf24;
+  --danger:#f87171;
+  --danger-soft:#3f1d1d;
+  --warn:#fbbf24;
+  --warn-soft:#3b2f10;
+  --ok:#4ade80;
+  --ok-soft:#14321f;
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px rgba(0,0,0,.35);
+}
+
+*,*::before,*::after{box-sizing:border-box}
+
+/* Keep [hidden] authoritative over the display rules below. */
+[hidden]{display:none !important}
+
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
+  font-family:Vazirmatn,Tahoma,"Segoe UI",sans-serif;
+  font-size:15px;
+  line-height:1.7;
+  transition:background .2s,color .2s;
+}
+html[lang="en"] body{font-family:Inter,"Segoe UI",system-ui,sans-serif}
+
+.wrap{max-width:960px;margin:0 auto;padding:20px 16px 56px}
+
+/* ---------- header ---------- */
+.topbar{
+  display:flex;align-items:center;gap:12px;flex-wrap:wrap;
+  padding:14px 0 22px;
+}
+.brand{display:flex;align-items:center;gap:12px;margin-inline-end:auto}
+.brand svg{width:42px;height:42px;flex:none}
+.brand h1{margin:0;font-size:1.25rem;font-weight:700;letter-spacing:-.01em}
+.brand p{margin:0;font-size:.8rem;color:var(--text-muted)}
+
+.tools{display:flex;gap:8px}
+.icon-btn{
+  border:1px solid var(--border);background:var(--surface);color:var(--text);
+  border-radius:10px;padding:7px 13px;font:inherit;font-size:.83rem;font-weight:600;
+  cursor:pointer;display:inline-flex;align-items:center;gap:6px;
+  transition:border-color .15s,background .15s;
+}
+.icon-btn:hover{border-color:var(--accent);background:var(--surface-2)}
+.icon-btn svg{width:15px;height:15px}
+
+/* ---------- cards ---------- */
+.card{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:var(--radius);box-shadow:var(--shadow);
+  padding:22px;margin-bottom:18px;
+}
+.card > h2{
+  margin:0 0 4px;font-size:1rem;font-weight:700;
+  display:flex;align-items:center;gap:8px;
+}
+.card > h2 .dot{width:7px;height:7px;border-radius:50%;background:var(--accent);flex:none}
+.card > .hint{margin:0 0 18px;font-size:.82rem;color:var(--text-muted)}
+
+fieldset{border:0;margin:0 0 4px;padding:0}
+legend{
+  font-size:.74rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
+  color:var(--text-muted);padding:0;margin-bottom:10px;
+}
+fieldset + fieldset{margin-top:22px;padding-top:20px;border-top:1px dashed var(--border)}
+
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px}
+
+.field{display:flex;flex-direction:column;gap:6px;min-width:0}
+.field label{font-size:.84rem;font-weight:500;color:var(--text)}
+.field .sub{font-size:.74rem;color:var(--text-muted);line-height:1.5}
+input,select{
+  width:100%;padding:10px 12px;font:inherit;font-size:.9rem;
+  color:var(--text);background:var(--surface-2);
+  border:1px solid var(--border);border-radius:10px;outline:none;
+  transition:border-color .15s,box-shadow .15s;
+}
+input:focus,select:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
+input[aria-invalid="true"]{border-color:var(--danger)}
+select{cursor:pointer;appearance:none;
+  background-image:linear-gradient(45deg,transparent 50%,currentColor 50%),linear-gradient(135deg,currentColor 50%,transparent 50%);
+  background-position:calc(var(--ar,0px) + 14px) 50%, calc(var(--ar,0px) + 19px) 50%;
+  background-size:5px 5px,5px 5px;background-repeat:no-repeat;
+  padding-inline-end:34px;
+}
+html[dir="ltr"] select{background-position:right 19px center, right 14px center}
+
+.seg{display:flex;background:var(--surface-2);border:1px solid var(--border);border-radius:10px;padding:3px;gap:3px}
+.seg button{
+  flex:1;border:0;background:transparent;color:var(--text-muted);
+  font:inherit;font-size:.83rem;font-weight:600;padding:7px 4px;
+  white-space:nowrap;
+  border-radius:7px;cursor:pointer;transition:background .15s,color .15s;
+}
+.seg button[aria-pressed="true"]{background:var(--accent);color:#fff}
+[data-theme="dark"] .seg button[aria-pressed="true"]{color:#04241f}
+
+.cta{
+  width:100%;margin-top:22px;padding:14px;border:0;border-radius:12px;
+  background:var(--accent);color:#fff;font:inherit;font-size:1rem;font-weight:700;
+  cursor:pointer;transition:background .15s,transform .05s;
+}
+[data-theme="dark"] .cta{color:#04241f}
+.cta:hover{background:var(--accent-strong)}
+[data-theme="dark"] .cta:hover{background:var(--accent-strong);color:#04241f}
+.cta:active{transform:translateY(1px)}
+
+/* ---------- results ---------- */
+#results[hidden]{display:none}
+
+.headline{
+  display:flex;align-items:center;gap:18px;flex-wrap:wrap;
+  background:var(--accent-soft);border:1px solid var(--accent);
+  border-radius:12px;padding:18px 20px;margin-bottom:18px;
+}
+.headline .val{font-size:2.3rem;font-weight:700;line-height:1;color:var(--accent-strong)}
+[data-theme="dark"] .headline .val{color:var(--accent-strong)}
+.headline .val small{font-size:.95rem;font-weight:600;margin-inline-start:4px}
+.headline .cap{font-size:.8rem;color:var(--accent-strong);opacity:.85;margin-top:5px}
+.headline .viz{margin-inline-start:auto}
+.headline .viz svg{display:block;width:90px;height:90px}
+
+.metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+.metric{background:var(--surface-2);border:1px solid var(--border);border-radius:11px;padding:12px 14px}
+.metric dt{font-size:.75rem;color:var(--text-muted);margin:0 0 3px}
+.metric dd{margin:0;font-size:1.05rem;font-weight:700;font-variant-numeric:tabular-nums}
+.metric dd small{font-size:.75rem;font-weight:500;color:var(--text-muted);margin-inline-start:3px}
+
+.bar-block{margin-top:18px}
+.bar-head{display:flex;justify-content:space-between;gap:12px;font-size:.8rem;color:var(--text-muted);margin-bottom:6px}
+/* Numeric readouts stay LTR so "3.71% / 5%" reads correctly in RTL too. */
+.bar-head .num{direction:ltr;unicode-bidi:isolate;font-variant-numeric:tabular-nums;white-space:nowrap}
+.bar{height:9px;background:var(--surface-2);border:1px solid var(--border);border-radius:99px;overflow:hidden}
+.bar span{display:block;height:100%;border-radius:99px;transition:width .4s ease}
+.bar span.ok{background:var(--ok)} .bar span.warn{background:var(--amber)} .bar span.bad{background:var(--danger)}
+
+.notes{margin-top:18px;display:flex;flex-direction:column;gap:9px}
+.note{
+  display:flex;gap:9px;align-items:flex-start;
+  padding:11px 13px;border-radius:10px;font-size:.84rem;border:1px solid transparent;
+}
+.note svg{width:16px;height:16px;flex:none;margin-top:3px}
+.note.ok{background:var(--ok-soft);color:var(--ok);border-color:currentColor}
+.note.warn{background:var(--warn-soft);color:var(--warn);border-color:currentColor}
+.note.bad{background:var(--danger-soft);color:var(--danger);border-color:currentColor}
+
+/* ---------- docs ---------- */
+details.doc{border-top:1px solid var(--border);padding:14px 0 2px}
+details.doc:first-of-type{border-top:0;padding-top:2px}
+details.doc summary{
+  cursor:pointer;font-weight:600;font-size:.92rem;list-style:none;
+  display:flex;align-items:center;gap:8px;
+}
+details.doc summary::-webkit-details-marker{display:none}
+details.doc summary::before{
+  content:"";width:0;height:0;flex:none;
+  border-block:4px solid transparent;
+  border-inline-start:6px solid var(--accent);border-inline-end:0;
+  transition:transform .15s;
+}
+html[dir="ltr"] details.doc summary::before{border-inline-start:6px solid var(--accent)}
+details.doc[open] summary::before{transform:rotate(90deg)}
+html[dir="rtl"] details.doc[open] summary::before{transform:rotate(-90deg)}
+details.doc .body{padding:10px 0 6px;font-size:.86rem;color:var(--text-muted)}
+details.doc .body p{margin:0 0 10px}
+details.doc .body ul{margin:0 0 10px;padding-inline-start:20px}
+details.doc .body li{margin-bottom:5px}
+.formula{
+  display:block;background:var(--surface-2);border:1px solid var(--border);
+  border-radius:9px;padding:10px 13px;margin:8px 0;
+  font-family:"SF Mono",Menlo,Consolas,monospace;font-size:.82rem;
+  color:var(--text);direction:ltr;text-align:left;overflow-x:auto;white-space:nowrap;
+}
+
+.tbl-scroll{overflow-x:auto;margin:8px 0}
+table{border-collapse:collapse;width:100%;font-size:.8rem;min-width:340px}
+th,td{border:1px solid var(--border);padding:6px 9px;text-align:start}
+th{background:var(--surface-2);font-weight:600;color:var(--text)}
+td{font-variant-numeric:tabular-nums}
+
+/* ---------- footer ---------- */
+footer{
+  text-align:center;padding-top:10px;font-size:.83rem;color:var(--text-muted);
+}
+footer .who{font-weight:600;color:var(--text)}
+footer a{color:var(--accent);text-decoration:none}
+footer a:hover{text-decoration:underline}
+footer .sep{margin:0 7px;opacity:.45}
+footer .disclaimer{
+  margin-top:12px;font-size:.76rem;line-height:1.65;
+  max-width:620px;margin-inline:auto;opacity:.85;
+}
+
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+
+@media (max-width:560px){
+  .wrap{padding:12px 12px 40px}
+  .card{padding:17px}
+  .headline{padding:15px}
+  .headline .val{font-size:1.9rem}
+  .headline .viz{display:none}
+}
+@media print{
+  .tools,.cta,details.doc{display:none}
+  body{background:#fff}
+  .card{box-shadow:none;break-inside:avoid}
+}
+</style>
 </head>
 <body>
-    <div class="container">
-        <div class="app-icon">
-            <img src="https://cdn-icons-png.flaticon.com/512/3103/3103446.png" alt="WireCalc Logo" />
-        </div>
-        <h2>محاسبه سطح مقطع سیم</h2>
-        <label>طول مسیر (متر): <input type="text" id="length" inputmode="decimal" autocomplete="off" /></label>
-        <label>توان مصرف‌کننده (کیلووات): <input type="text" id="power" inputmode="decimal" autocomplete="off" /></label>
-        <label>نوع برق:
-            <select id="phase">
-                <option value="single">تک‌فاز</option>
-                <option value="three">سه‌فاز</option>
-            </select>
-        </label>
-        <label>نوع سیم:
-            <select id="material">
-                <option value="copper">مس</option>
-                <option value="aluminum">آلومینیوم</option>
-            </select>
-        </label>
-        <button onclick="calculate()">محاسبه</button>
-        <h3 id="result"></h3>
-        <div class="wire-visual">
-            <div id="wireShape" class="wire"></div>
-        </div>
+<div class="wrap">
+
+  <!-- ============ header ============ -->
+  <header class="topbar">
+    <div class="brand">
+      <svg viewBox="0 0 64 64" aria-hidden="true">
+        <rect width="64" height="64" rx="14" fill="var(--accent)"/>
+        <circle cx="32" cy="32" r="17" fill="none" stroke="var(--amber)" stroke-width="6"/>
+        <circle cx="32" cy="32" r="7" fill="var(--amber)"/>
+      </svg>
+      <div>
+        <h1>CableSizer</h1>
+        <p data-i18n="tagline">انتخاب سطح مقطع کابل بر پایه افت ولتاژ و ظرفیت جریان‌دهی</p>
+      </div>
     </div>
-    <div class="footer">این ابزار توسط محمد نریموسایی طراحی و برنامه‌نویسی شده است.</div>
-    <script>
-        function parseInput(id) {
-            const value = document.getElementById(id).value.replace(',', '.');
-            return parseFloat(value);
-        }
-        function calculate() {
-            const length = parseInput("length");
-            const power = parseInput("power");
-            const phase = document.getElementById("phase").value;
-            const material = document.getElementById("material").value;
-            if (isNaN(length) || isNaN(power) || length <= 0 || power <= 0) {
-                document.getElementById("result").innerText = "لطفاً مقدار معتبر وارد کنید.";
-                return;
-            }
-            const voltage = phase === "single" ? 220 : 400;
-            const resistivity = material === "copper" ? 0.0175 : 0.0282;
-            const current = phase === "three"
-                ? (power * 1000) / (Math.sqrt(3) * voltage)
-                : (power * 1000) / voltage;
-            const voltageDrop = voltage * 0.05;
-            const multiplier = phase === "single" ? 2 : Math.sqrt(3);
-            const area = (multiplier * length * current * resistivity) / voltageDrop;
-            const roundedArea = area.toFixed(2);
-            document.getElementById("result").innerText =
-                `سطح مقطع مورد نیاز سیم: ${roundedArea} میلیمتر مربع`;
-            const wire = document.getElementById("wireShape");
-            const diameter = Math.sqrt(area / Math.PI) * 2;
-            const displayWidth = Math.min(Math.max(diameter * 4, 20), 400);
-            wire.style.width = `${displayWidth}px`;
-        }
-    </script>
+    <div class="tools">
+      <button class="icon-btn" id="langBtn" type="button" title="Change language">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a15 15 0 0 1 0 18a15 15 0 0 1 0-18"/></svg>
+        <span id="langLabel">EN</span>
+      </button>
+      <button class="icon-btn" id="themeBtn" type="button" title="Toggle theme" aria-label="Toggle theme">
+        <svg id="themeIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- ============ input form ============ -->
+  <section class="card">
+    <h2><span class="dot"></span><span data-i18n="formTitle">مشخصات مدار</span></h2>
+    <p class="hint" data-i18n="formHint">مقادیر را وارد کنید؛ همه پارامترها مقدار پیش‌فرض منطقی دارند.</p>
+
+    <form id="calcForm" novalidate>
+
+      <fieldset>
+        <legend data-i18n="secLoad">بار و منبع تغذیه</legend>
+        <div class="grid">
+          <div class="field">
+            <label data-i18n="fSystem">سیستم برق</label>
+            <div class="seg" role="group" id="phaseSeg">
+              <button type="button" data-val="single" aria-pressed="true" data-i18n="optSingle">تک‌فاز</button>
+              <button type="button" data-val="three" aria-pressed="false" data-i18n="optThree">سه‌فاز</button>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="voltage" data-i18n="fVoltage">ولتاژ نامی (V)</label>
+            <input type="text" id="voltage" value="230" inputmode="decimal" autocomplete="off">
+            <span class="sub" data-i18n="fVoltageSub">تک‌فاز: ولتاژ فاز-نول · سه‌فاز: ولتاژ خط</span>
+          </div>
+
+          <div class="field">
+            <label data-i18n="fLoadMode">نحوه تعریف بار</label>
+            <div class="seg" role="group" id="loadSeg">
+              <button type="button" data-val="power" aria-pressed="true" data-i18n="optByPower">توان (kW)</button>
+              <button type="button" data-val="current" aria-pressed="false" data-i18n="optByCurrent">جریان (A)</button>
+            </div>
+          </div>
+
+          <div class="field" id="powerField">
+            <label for="power" data-i18n="fPower">توان مصرف‌کننده (kW)</label>
+            <input type="text" id="power" value="5" inputmode="decimal" autocomplete="off">
+          </div>
+
+          <div class="field" id="currentField" hidden>
+            <label for="current" data-i18n="fCurrent">جریان طراحی Ib (A)</label>
+            <input type="text" id="current" value="25" inputmode="decimal" autocomplete="off">
+          </div>
+
+          <div class="field" id="pfField">
+            <label for="pf" data-i18n="fPf">ضریب توان (cos φ)</label>
+            <input type="text" id="pf" value="0.9" inputmode="decimal" autocomplete="off">
+          </div>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend data-i18n="secCable">مشخصات کابل</legend>
+        <div class="grid">
+          <div class="field">
+            <label for="material" data-i18n="fMaterial">جنس هادی</label>
+            <select id="material">
+              <option value="copper" data-i18n="optCopper">مس</option>
+              <option value="aluminum" data-i18n="optAluminum">آلومینیوم</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="insulation" data-i18n="fInsulation">نوع عایق</label>
+            <select id="insulation">
+              <option value="pvc" data-i18n="optPvc">PVC — حداکثر ۷۰°C</option>
+              <option value="xlpe" data-i18n="optXlpe">XLPE / EPR — حداکثر ۹۰°C</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="method" data-i18n="fMethod">روش نصب</label>
+            <select id="method">
+              <option value="0" data-i18n="optM_A1">A1 — داخل لوله در دیوار عایق‌کاری‌شده</option>
+              <option value="1" data-i18n="optM_A2">A2 — کابل داخل لوله در دیوار عایق‌کاری‌شده</option>
+              <option value="2" selected data-i18n="optM_B1">B1 — داخل لوله روی دیوار</option>
+              <option value="3" data-i18n="optM_B2">B2 — کابل داخل لوله روی دیوار</option>
+              <option value="4" data-i18n="optM_C">C — نصب مستقیم روی دیوار یا سینی</option>
+              <option value="5" data-i18n="optM_E">E/F — در هوای آزاد یا سینی مشبک</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="circuits" data-i18n="fCircuits">تعداد مدارهای مجاور</label>
+            <select id="circuits">
+              <option value="1" selected>1</option><option value="2">2</option>
+              <option value="3">3</option><option value="4">4</option>
+              <option value="5">5</option><option value="6">6</option>
+              <option value="7">7</option><option value="8">8</option>
+              <option value="9">9</option><option value="12">12</option>
+              <option value="16">16</option><option value="20">20</option>
+            </select>
+            <span class="sub" data-i18n="fCircuitsSub">کابل‌های کنار هم در یک مسیر — ضریب تجمع</span>
+          </div>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend data-i18n="secCond">شرایط محیط و مسیر</legend>
+        <div class="grid">
+          <div class="field">
+            <label for="length" data-i18n="fLength">طول مسیر کابل (m)</label>
+            <input type="text" id="length" value="40" inputmode="decimal" autocomplete="off">
+            <span class="sub" data-i18n="fLengthSub">فاصله یک‌طرفه از تابلو تا مصرف‌کننده</span>
+          </div>
+
+          <div class="field">
+            <label for="ambient" data-i18n="fAmbient">دمای محیط (°C)</label>
+            <input type="text" id="ambient" value="30" inputmode="decimal" autocomplete="off">
+            <span class="sub" data-i18n="fAmbientSub">دمای مرجع جداول ۳۰°C است</span>
+          </div>
+
+          <div class="field">
+            <label for="maxDrop" data-i18n="fMaxDrop">حداکثر افت ولتاژ مجاز (%)</label>
+            <select id="maxDrop">
+              <option value="3" data-i18n="optDrop3">۳٪ — مدار روشنایی</option>
+              <option value="5" selected data-i18n="optDrop5">۵٪ — مدار قدرت و موتوری</option>
+              <option value="8" data-i18n="optDrop8">۸٪ — مسیرهای طولانی</option>
+            </select>
+          </div>
+        </div>
+      </fieldset>
+
+      <button type="submit" class="cta" data-i18n="btnCalc">محاسبه سطح مقطع</button>
+    </form>
+  </section>
+
+  <!-- ============ results ============ -->
+  <section class="card" id="results" hidden aria-live="polite">
+    <h2><span class="dot"></span><span data-i18n="resTitle">نتیجه محاسبه</span></h2>
+    <p class="hint" data-i18n="resHint">سطح مقطع پیشنهادی، کوچک‌ترین اندازه استاندارد است که هر دو شرط جریان‌دهی و افت ولتاژ را برآورده می‌کند.</p>
+
+    <div class="headline">
+      <div>
+        <div class="val"><span id="rSize">—</span><small>mm²</small></div>
+        <div class="cap" id="rCaption"></div>
+      </div>
+      <div class="viz" aria-hidden="true">
+        <svg viewBox="0 0 100 100">
+          <circle cx="50" cy="50" r="46" fill="none" stroke="var(--accent)" stroke-width="1.5" stroke-dasharray="4 4" opacity=".45"/>
+          <circle id="rCircle" cx="50" cy="50" r="10" fill="var(--amber)"/>
+        </svg>
+      </div>
+    </div>
+
+    <dl class="metrics">
+      <div class="metric"><dt data-i18n="mIb">جریان طراحی Ib</dt><dd><span id="rIb">—</span><small>A</small></dd></div>
+      <div class="metric"><dt data-i18n="mIz">ظرفیت مجاز پس از تصحیح</dt><dd><span id="rIz">—</span><small>A</small></dd></div>
+      <div class="metric"><dt data-i18n="mKtemp">ضریب تصحیح دما</dt><dd id="rKt">—</dd></div>
+      <div class="metric"><dt data-i18n="mKgroup">ضریب تجمع</dt><dd id="rKg">—</dd></div>
+      <div class="metric"><dt data-i18n="mTop">دمای کار هادی</dt><dd><span id="rTop">—</span><small>°C</small></dd></div>
+      <div class="metric"><dt data-i18n="mRho">مقاومت ویژه در دمای کار</dt><dd><span id="rRho">—</span><small>Ω·mm²/m</small></dd></div>
+      <div class="metric"><dt data-i18n="mDropV">افت ولتاژ</dt><dd><span id="rDropV">—</span><small>V</small></dd></div>
+      <div class="metric"><dt data-i18n="mMinVd">حداقل مقطع از نظر افت ولتاژ</dt><dd><span id="rMinVd">—</span><small>mm²</small></dd></div>
+    </dl>
+
+    <div class="bar-block">
+      <div class="bar-head">
+        <span data-i18n="barDrop">افت ولتاژ نسبت به حد مجاز</span>
+        <span class="num"><span id="rDropPct">—</span>% / <span id="rDropLim">—</span>%</span>
+      </div>
+      <div class="bar"><span id="rDropBar" class="ok" style="width:0"></span></div>
+    </div>
+
+    <div class="bar-block">
+      <div class="bar-head">
+        <span data-i18n="barLoad">بارگذاری کابل نسبت به ظرفیت مجاز</span>
+        <span class="num"><span id="rUtil">—</span>%</span>
+      </div>
+      <div class="bar"><span id="rUtilBar" class="ok" style="width:0"></span></div>
+    </div>
+
+    <div class="notes" id="rNotes"></div>
+  </section>
+
+  <!-- ============ documentation ============ -->
+  <section class="card">
+    <h2><span class="dot"></span><span data-i18n="docTitle">روش محاسبه و مبانی فنی</span></h2>
+    <p class="hint" data-i18n="docHint">خلاصه‌ای از روابط، مراجع و فرض‌های به‌کاررفته در این ابزار.</p>
+
+    <details class="doc" open>
+      <summary data-i18n="doc1t">۱. جریان طراحی</summary>
+      <div class="body">
+        <p data-i18n="doc1p">جریان طراحی مدار از توان و ضریب توان به دست می‌آید:</p>
+        <code class="formula">I_b = P / (V × cosφ)          — single phase</code>
+        <code class="formula">I_b = P / (√3 × V × cosφ)      — three phase</code>
+      </div>
+    </details>
+
+    <details class="doc">
+      <summary data-i18n="doc2t">۲. تأثیر دمای محیط</summary>
+      <div class="body">
+        <p data-i18n="doc2p1">دمای محیط از دو مسیر مستقل بر انتخاب کابل اثر می‌گذارد و هر دو در این ابزار لحاظ شده‌اند:</p>
+        <ul>
+          <li data-i18n="doc2l1"><b>کاهش ظرفیت جریان‌دهی:</b> جداول ظرفیت مجاز برای دمای مرجع ۳۰°C تدوین شده‌اند. با بالا رفتن دمای محیط، اختلاف دمای مجاز هادی کم می‌شود و ظرفیت کابل باید در ضریب تصحیح دما ضرب شود (جدول B.52.14 استاندارد IEC 60364-5-52).</li>
+          <li data-i18n="doc2l2"><b>افزایش مقاومت هادی:</b> مقاومت فلز با دما زیاد می‌شود و در نتیجه افت ولتاژ بالا می‌رود. مقاومت ویژه در دمای کار واقعی هادی محاسبه می‌شود، نه در ۲۰°C.</li>
+        </ul>
+        <code class="formula">ρ(θ) = ρ₂₀ × [1 + α × (θ − 20)]</code>
+        <code class="formula">θ_op = θ_amb + (θ_max − θ_amb) × (I_b / I_z)²</code>
+        <p data-i18n="doc2p2">ضریب دمایی α برابر ۰٫۰۰۳۹۳ برای مس و ۰٫۰۰۴۰۳ برای آلومینیوم در نظر گرفته شده است.</p>
+        <div class="tbl-scroll">
+          <table>
+            <thead><tr>
+              <th data-i18n="tblAmb">دمای محیط (°C)</th><th>20</th><th>30</th><th>35</th><th>40</th><th>45</th><th>50</th><th>55</th>
+            </tr></thead>
+            <tbody>
+              <tr><th data-i18n="tblPvc">ضریب PVC (۷۰°C)</th><td>1.12</td><td>1.00</td><td>0.94</td><td>0.87</td><td>0.79</td><td>0.71</td><td>0.61</td></tr>
+              <tr><th data-i18n="tblXlpe">ضریب XLPE (۹۰°C)</th><td>1.08</td><td>1.00</td><td>0.96</td><td>0.91</td><td>0.87</td><td>0.82</td><td>0.76</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </details>
+
+    <details class="doc">
+      <summary data-i18n="doc3t">۳. شرط ظرفیت جریان‌دهی</summary>
+      <div class="body">
+        <p data-i18n="doc3p">ظرفیت پایه کابل از جداول IEC 60364-5-52 بر اساس جنس هادی، نوع عایق، روش نصب و تعداد هادی‌های باردار خوانده می‌شود، سپس در ضرایب تصحیح ضرب می‌گردد:</p>
+        <code class="formula">I_z = I_table × k_temp × k_group   ⟹   I_z ≥ I_b</code>
+        <p data-i18n="doc3p2">ضریب تجمع برای کابل‌های مجاور مطابق جدول B.52.17 اعمال می‌شود (۲ مدار: ۰٫۸۰ · ۳ مدار: ۰٫۷۰ · ۴ مدار: ۰٫۶۵ و …).</p>
+      </div>
+    </details>
+
+    <details class="doc">
+      <summary data-i18n="doc4t">۴. شرط افت ولتاژ</summary>
+      <div class="body">
+        <p data-i18n="doc4p">افت ولتاژ با در نظر گرفتن مقاومت و راکتانس مسیر محاسبه می‌شود:</p>
+        <code class="formula">ΔV = 2 × L × I_b × (R'·cosφ + X'·sinφ)     — single phase</code>
+        <code class="formula">ΔV = √3 × L × I_b × (R'·cosφ + X'·sinφ)    — three phase</code>
+        <p data-i18n="doc4p2">که در آن R' = ρ(θ)/A مقاومت هر متر هادی و X' راکتانس هر متر است (مقدار نوعی ۰٫۰۸ اهم بر کیلومتر برای کابل‌های چندرشته‌ای فشار ضعیف).</p>
+      </div>
+    </details>
+
+    <details class="doc">
+      <summary data-i18n="doc5t">۵. فرض‌ها و محدودیت‌ها</summary>
+      <div class="body">
+        <ul>
+          <li data-i18n="doc5l1">ظرفیت‌های مبنا برای هادی مسی و نصب در هوا است؛ برای آلومینیوم ضریب تقریبی ۰٫۷۸ اعمال می‌شود.</li>
+          <li data-i18n="doc5l2">اثر هارمونیک‌ها، جریان راه‌اندازی موتور و کابل‌های دفنی در خاک در محاسبه وارد نشده است.</li>
+          <li data-i18n="doc5l3">هماهنگی با وسیله حفاظتی (شرط I_b ≤ I_n ≤ I_z) و بررسی تحمل اتصال کوتاه جداگانه لازم است.</li>
+          <li data-i18n="doc5l4">سری مقاطع استاندارد: ۱٫۵ تا ۳۰۰ میلی‌متر مربع. برای بارهای بزرگ‌تر از کابل‌های موازی استفاده کنید.</li>
+        </ul>
+      </div>
+    </details>
+  </section>
+
+  <footer>
+    <div>
+      <span data-i18n="ftBy">طراحی و توسعه:</span>
+      <span class="who">m0000hamad</span>
+      <span data-i18n="ftName">— محمد نریموسایی</span>
+    </div>
+    <div style="margin-top:6px">
+      <a href="https://github.com/m0000hamad/CableSizer" target="_blank" rel="noopener">GitHub</a>
+      <span class="sep">·</span>
+      <a href="https://github.com/m0000hamad/CableSizer/blob/main/CHANGELOG.md" target="_blank" rel="noopener" id="ftVersion">v1.1.0</a>
+      <span class="sep">·</span>
+      <span data-i18n="ftLicense">انتشار تحت مجوز MIT</span>
+    </div>
+    <p class="disclaimer" data-i18n="ftDisclaimer">
+      این ابزار برای برآورد مهندسی و مطالعات اولیه تهیه شده است. نتایج آن جایگزین محاسبات تفصیلی، مقررات ملی ساختمان و تأیید مهندس ناظر برق نیست.
+    </p>
+  </footer>
+
+</div>
+
+<script>
+"use strict";
+
+/* =========================================================================
+   Reference data — IEC 60364-5-52
+   ========================================================================= */
+
+/** Standard conductor cross-sections (mm²). */
+const SIZES = [1.5, 2.5, 4, 6, 10, 16, 25, 35, 50, 70, 95, 120, 150, 185, 240, 300];
+
+/**
+ * Base current-carrying capacity (A) for copper conductors at 30 °C ambient.
+ * Each row maps a cross-section to installation methods [A1, A2, B1, B2, C, E/F].
+ * Keyed by insulation, then by the number of loaded conductors.
+ */
+const AMPACITY = {
+  pvc: {
+    2: {1.5:[14.5,14,17.5,16.5,19.5,22], 2.5:[19.5,18.5,24,23,27,30], 4:[26,25,32,30,36,40],
+        6:[34,32,41,38,46,51], 10:[46,43,57,52,63,70], 16:[61,57,76,69,85,94],
+        25:[80,75,101,90,112,119], 35:[99,92,125,111,138,148], 50:[119,110,151,133,168,180],
+        70:[151,139,192,168,213,232], 95:[182,167,232,201,258,282], 120:[210,192,269,232,299,328],
+        150:[240,219,300,258,344,379], 185:[273,248,341,294,392,434], 240:[321,291,400,344,461,514],
+        300:[367,334,458,394,530,593]},
+    3: {1.5:[13.5,13,15.5,15,17.5,18.5], 2.5:[18,17.5,21,20,24,25], 4:[24,23,28,27,32,34],
+        6:[31,29,36,34,41,43], 10:[42,39,50,46,57,60], 16:[56,52,68,62,76,80],
+        25:[73,68,89,80,96,101], 35:[89,83,110,99,119,126], 50:[108,99,134,118,144,153],
+        70:[136,125,171,149,184,196], 95:[164,150,207,179,223,238], 120:[188,172,239,206,259,276],
+        150:[216,196,262,225,299,319], 185:[245,223,296,255,341,364], 240:[286,261,346,297,403,430],
+        300:[328,298,394,339,464,497]}
+  },
+  xlpe: {
+    2: {1.5:[19,18.5,23,22,24,26], 2.5:[26,25,31,30,33,36], 4:[35,33,42,40,45,49],
+        6:[45,42,54,51,58,63], 10:[61,57,75,69,80,86], 16:[81,76,100,91,107,115],
+        25:[106,99,133,119,138,149], 35:[131,121,164,146,171,185], 50:[158,145,198,175,209,225],
+        70:[200,183,253,221,269,289], 95:[241,220,306,265,328,352], 120:[278,253,354,305,382,410],
+        150:[318,290,393,334,441,473], 185:[362,329,449,384,506,542], 240:[424,386,528,459,599,641],
+        300:[486,442,603,532,693,741]},
+    3: {1.5:[17,16.5,20,19.5,22,23], 2.5:[23,22,28,26,30,32], 4:[31,30,37,35,40,42],
+        6:[40,38,48,44,52,54], 10:[54,51,66,60,71,75], 16:[73,68,88,80,96,100],
+        25:[95,89,117,105,119,127], 35:[117,109,144,128,147,158], 50:[141,130,175,154,179,192],
+        70:[179,164,222,194,229,246], 95:[216,197,269,233,278,298], 120:[249,227,312,268,322,346],
+        150:[285,259,342,300,371,399], 185:[324,295,384,340,424,456], 240:[380,346,450,398,500,538],
+        300:[435,396,514,455,576,621]}
+  }
+};
+
+/** Aluminium ampacity relative to copper — engineering approximation. */
+const AL_FACTOR = 0.78;
+
+/** Ambient temperature correction factors (Table B.52.14), reference 30 °C. */
+const TEMP_FACTORS = {
+  pvc:  [[10,1.22],[15,1.17],[20,1.12],[25,1.06],[30,1.00],[35,0.94],[40,0.87],[45,0.79],[50,0.71],[55,0.61],[60,0.50]],
+  xlpe: [[10,1.15],[15,1.12],[20,1.08],[25,1.04],[30,1.00],[35,0.96],[40,0.91],[45,0.87],[50,0.82],[55,0.76],[60,0.71],[65,0.65],[70,0.58],[75,0.50],[80,0.41]]
+};
+
+/** Grouping factors for circuits bunched in one run (Table B.52.17). */
+const GROUP_FACTORS = {1:1.00, 2:0.80, 3:0.70, 4:0.65, 5:0.60, 6:0.57, 7:0.54, 8:0.52, 9:0.50, 12:0.45, 16:0.41, 20:0.38};
+
+/** Conductor properties: resistivity at 20 °C (Ω·mm²/m) and temperature coefficient (1/K). */
+const CONDUCTOR = {
+  copper:   {rho20: 0.017241, alpha: 0.00393},
+  aluminum: {rho20: 0.028264, alpha: 0.00403}
+};
+
+/** Maximum permitted conductor operating temperature by insulation (°C). */
+const MAX_TEMP = {pvc: 70, xlpe: 90};
+
+/** Typical per-metre reactance of a LV multicore cable (Ω/m). */
+const REACTANCE = 0.00008;
+
+/* =========================================================================
+   Engineering core
+   ========================================================================= */
+
+/** Linear interpolation over a sorted [x, y] table, clamped at both ends. */
+function interpolate(table, x) {
+  if (x <= table[0][0]) return table[0][1];
+  const last = table[table.length - 1];
+  if (x >= last[0]) return last[1];
+  for (let i = 0; i < table.length - 1; i++) {
+    const [x1, y1] = table[i], [x2, y2] = table[i + 1];
+    if (x >= x1 && x <= x2) return y1 + (y2 - y1) * (x - x1) / (x2 - x1);
+  }
+  return last[1];
+}
+
+/** Base ampacity of one cross-section for the given cable configuration. */
+function baseAmpacity(size, cfg) {
+  const row = AMPACITY[cfg.insulation][cfg.loadedConductors][size];
+  const value = row[cfg.method];
+  return cfg.material === "aluminum" ? value * AL_FACTOR : value;
+}
+
+/**
+ * Selects the smallest standard cross-section satisfying both the
+ * current-carrying capacity and the voltage-drop limit.
+ *
+ * Returns a result object, or `{error}` when no listed size is adequate.
+ */
+function sizeCable(cfg) {
+  const maxTemp = MAX_TEMP[cfg.insulation];
+
+  if (cfg.ambient >= maxTemp) {
+    return {error: "ambientTooHigh", maxTemp};
+  }
+
+  const kTemp  = interpolate(TEMP_FACTORS[cfg.insulation], cfg.ambient);
+  const kGroup = GROUP_FACTORS[cfg.circuits] ?? 1;
+  const cond   = CONDUCTOR[cfg.material];
+
+  const sinPhi = Math.sqrt(Math.max(0, 1 - cfg.pf * cfg.pf));
+  const multiplier = cfg.phase === "single" ? 2 : Math.sqrt(3);
+  const dropLimitV = cfg.voltage * cfg.maxDropPct / 100;
+
+  // Smallest size that carries the design current after derating.
+  let ampacityMin = null;
+  for (const size of SIZES) {
+    if (baseAmpacity(size, cfg) * kTemp * kGroup >= cfg.current) { ampacityMin = size; break; }
+  }
+
+  // Smallest size meeting the voltage-drop limit, evaluated at each
+  // candidate's own operating temperature.
+  let dropMin = null;
+  const evaluate = (size) => {
+    const iz = baseAmpacity(size, cfg) * kTemp * kGroup;
+    const load = iz > 0 ? Math.min(1, cfg.current / iz) : 1;
+    const opTemp = cfg.ambient + (maxTemp - cfg.ambient) * load * load;
+    const rho = cond.rho20 * (1 + cond.alpha * (opTemp - 20));
+    const rPerM = rho / size;
+    const dropV = multiplier * cfg.length * cfg.current * (rPerM * cfg.pf + REACTANCE * sinPhi);
+    return {size, iz, opTemp, rho, dropV, dropPct: dropV / cfg.voltage * 100, utilisation: iz > 0 ? cfg.current / iz * 100 : Infinity};
+  };
+
+  for (const size of SIZES) {
+    if (evaluate(size).dropV <= dropLimitV) { dropMin = size; break; }
+  }
+
+  if (ampacityMin === null || dropMin === null) {
+    return {error: "tooLarge", ampacityMin, dropMin, kTemp, kGroup};
+  }
+
+  const chosen = evaluate(Math.max(ampacityMin, dropMin));
+  return {
+    ...chosen,
+    kTemp, kGroup, maxTemp, ampacityMin, dropMin,
+    governedBy: dropMin > ampacityMin ? "drop" : "ampacity",
+    dropLimitPct: cfg.maxDropPct
+  };
+}
+
+/* =========================================================================
+   Internationalisation
+   ========================================================================= */
+
+const I18N = {
+  fa: {
+    _title: "CableSizer — محاسبه‌گر سطح مقطع کابل",
+    tagline: "انتخاب سطح مقطع کابل بر پایه افت ولتاژ و ظرفیت جریان‌دهی",
+    formTitle: "مشخصات مدار",
+    formHint: "مقادیر را وارد کنید؛ همه پارامترها مقدار پیش‌فرض منطقی دارند.",
+    secLoad: "بار و منبع تغذیه",
+    fSystem: "سیستم برق", optSingle: "تک‌فاز", optThree: "سه‌فاز",
+    fVoltage: "ولتاژ نامی (V)", fVoltageSub: "تک‌فاز: ولتاژ فاز-نول · سه‌فاز: ولتاژ خط",
+    fLoadMode: "نحوه تعریف بار", optByPower: "توان (kW)", optByCurrent: "جریان (A)",
+    fPower: "توان مصرف‌کننده (kW)", fCurrent: "جریان طراحی Ib (A)", fPf: "ضریب توان (cos φ)",
+    secCable: "مشخصات کابل",
+    fMaterial: "جنس هادی", optCopper: "مس", optAluminum: "آلومینیوم",
+    fInsulation: "نوع عایق", optPvc: "PVC — حداکثر ۷۰°C", optXlpe: "XLPE / EPR — حداکثر ۹۰°C",
+    fMethod: "روش نصب",
+    optM_A1: "A1 — داخل لوله در دیوار عایق‌کاری‌شده",
+    optM_A2: "A2 — کابل داخل لوله در دیوار عایق‌کاری‌شده",
+    optM_B1: "B1 — داخل لوله روی دیوار",
+    optM_B2: "B2 — کابل داخل لوله روی دیوار",
+    optM_C:  "C — نصب مستقیم روی دیوار یا سینی",
+    optM_E:  "E/F — در هوای آزاد یا سینی مشبک",
+    fCircuits: "تعداد مدارهای مجاور", fCircuitsSub: "کابل‌های کنار هم در یک مسیر — ضریب تجمع",
+    secCond: "شرایط محیط و مسیر",
+    fLength: "طول مسیر کابل (m)", fLengthSub: "فاصله یک‌طرفه از تابلو تا مصرف‌کننده",
+    fAmbient: "دمای محیط (°C)", fAmbientSub: "دمای مرجع جداول ۳۰°C است",
+    fMaxDrop: "حداکثر افت ولتاژ مجاز (%)",
+    optDrop3: "۳٪ — مدار روشنایی", optDrop5: "۵٪ — مدار قدرت و موتوری", optDrop8: "۸٪ — مسیرهای طولانی",
+    btnCalc: "محاسبه سطح مقطع",
+    resTitle: "نتیجه محاسبه",
+    resHint: "سطح مقطع پیشنهادی، کوچک‌ترین اندازه استاندارد است که هر دو شرط جریان‌دهی و افت ولتاژ را برآورده می‌کند.",
+    mIb: "جریان طراحی Ib", mIz: "ظرفیت مجاز پس از تصحیح", mKtemp: "ضریب تصحیح دما",
+    mKgroup: "ضریب تجمع", mTop: "دمای کار هادی", mRho: "مقاومت ویژه در دمای کار",
+    mDropV: "افت ولتاژ", mMinVd: "حداقل مقطع از نظر افت ولتاژ",
+    barDrop: "افت ولتاژ نسبت به حد مجاز", barLoad: "بارگذاری کابل نسبت به ظرفیت مجاز",
+    capDrop: "تعیین‌کننده: شرط افت ولتاژ",
+    capAmp: "تعیین‌کننده: ظرفیت جریان‌دهی",
+    noteOk: "هر دو شرط جریان‌دهی و افت ولتاژ برآورده شده است.",
+    noteDerate: (k, t) => `به دلیل دمای محیط ${t}°C، ظرفیت کابل در ضریب ${k} ضرب شده است.`,
+    noteUpsize: (a, d) => `شرط افت ولتاژ مقطع را از ${a} به ${d} میلی‌متر مربع افزایش داد.`,
+    noteGroup: (k, n) => `به دلیل ${n} مدار مجاور، ضریب تجمع ${k} اعمال شد.`,
+    noteHighUtil: "بارگذاری کابل بالای ۹۰٪ ظرفیت مجاز است؛ یک مقطع بزرگ‌تر توصیه می‌شود.",
+    errInvalid: "لطفاً همه مقادیر را به صورت عددی و بزرگ‌تر از صفر وارد کنید.",
+    errPf: "ضریب توان باید بین ۰٫۱ و ۱ باشد.",
+    errAmbient: (m) => `دمای محیط باید کمتر از حداکثر دمای مجاز عایق (${m}°C) باشد.`,
+    errTooLarge: "هیچ مقطع استانداردی تا ۳۰۰ میلی‌متر مربع پاسخگو نیست. از کابل‌های موازی یا ولتاژ بالاتر استفاده کنید.",
+    docTitle: "روش محاسبه و مبانی فنی",
+    docHint: "خلاصه‌ای از روابط، مراجع و فرض‌های به‌کاررفته در این ابزار.",
+    doc1t: "۱. جریان طراحی",
+    doc1p: "جریان طراحی مدار از توان و ضریب توان به دست می‌آید:",
+    doc2t: "۲. تأثیر دمای محیط",
+    doc2p1: "دمای محیط از دو مسیر مستقل بر انتخاب کابل اثر می‌گذارد و هر دو در این ابزار لحاظ شده‌اند:",
+    doc2l1: "<b>کاهش ظرفیت جریان‌دهی:</b> جداول ظرفیت مجاز برای دمای مرجع ۳۰°C تدوین شده‌اند. با بالا رفتن دمای محیط، اختلاف دمای مجاز هادی کم می‌شود و ظرفیت کابل باید در ضریب تصحیح دما ضرب شود (جدول B.52.14 استاندارد IEC 60364-5-52).",
+    doc2l2: "<b>افزایش مقاومت هادی:</b> مقاومت فلز با دما زیاد می‌شود و در نتیجه افت ولتاژ بالا می‌رود. مقاومت ویژه در دمای کار واقعی هادی محاسبه می‌شود، نه در ۲۰°C.",
+    doc2p2: "ضریب دمایی α برابر ۰٫۰۰۳۹۳ برای مس و ۰٫۰۰۴۰۳ برای آلومینیوم در نظر گرفته شده است.",
+    tblAmb: "دمای محیط (°C)", tblPvc: "ضریب PVC (۷۰°C)", tblXlpe: "ضریب XLPE (۹۰°C)",
+    doc3t: "۳. شرط ظرفیت جریان‌دهی",
+    doc3p: "ظرفیت پایه کابل از جداول IEC 60364-5-52 بر اساس جنس هادی، نوع عایق، روش نصب و تعداد هادی‌های باردار خوانده می‌شود، سپس در ضرایب تصحیح ضرب می‌گردد:",
+    doc3p2: "ضریب تجمع برای کابل‌های مجاور مطابق جدول B.52.17 اعمال می‌شود (۲ مدار: ۰٫۸۰ · ۳ مدار: ۰٫۷۰ · ۴ مدار: ۰٫۶۵ و …).",
+    doc4t: "۴. شرط افت ولتاژ",
+    doc4p: "افت ولتاژ با در نظر گرفتن مقاومت و راکتانس مسیر محاسبه می‌شود:",
+    doc4p2: "که در آن R' = ρ(θ)/A مقاومت هر متر هادی و X' راکتانس هر متر است (مقدار نوعی ۰٫۰۸ اهم بر کیلومتر برای کابل‌های چندرشته‌ای فشار ضعیف).",
+    doc5t: "۵. فرض‌ها و محدودیت‌ها",
+    doc5l1: "ظرفیت‌های مبنا برای هادی مسی و نصب در هوا است؛ برای آلومینیوم ضریب تقریبی ۰٫۷۸ اعمال می‌شود.",
+    doc5l2: "اثر هارمونیک‌ها، جریان راه‌اندازی موتور و کابل‌های دفنی در خاک در محاسبه وارد نشده است.",
+    doc5l3: "هماهنگی با وسیله حفاظتی (شرط I_b ≤ I_n ≤ I_z) و بررسی تحمل اتصال کوتاه جداگانه لازم است.",
+    doc5l4: "سری مقاطع استاندارد: ۱٫۵ تا ۳۰۰ میلی‌متر مربع. برای بارهای بزرگ‌تر از کابل‌های موازی استفاده کنید.",
+    ftBy: "طراحی و توسعه:", ftName: "— محمد نریموسایی", ftLicense: "انتشار تحت مجوز MIT",
+    ftDisclaimer: "این ابزار برای برآورد مهندسی و مطالعات اولیه تهیه شده است. نتایج آن جایگزین محاسبات تفصیلی، مقررات ملی ساختمان و تأیید مهندس ناظر برق نیست."
+  },
+  en: {
+    _title: "CableSizer — Cable Size Calculator",
+    tagline: "Cable sizing by voltage drop and current-carrying capacity",
+    formTitle: "Circuit parameters",
+    formHint: "Enter your values — every field has a sensible default.",
+    secLoad: "Load and supply",
+    fSystem: "Supply system", optSingle: "Single phase", optThree: "Three phase",
+    fVoltage: "Nominal voltage (V)", fVoltageSub: "Single phase: line-to-neutral · Three phase: line-to-line",
+    fLoadMode: "Define load by", optByPower: "Power (kW)", optByCurrent: "Current (A)",
+    fPower: "Load power (kW)", fCurrent: "Design current Ib (A)", fPf: "Power factor (cos φ)",
+    secCable: "Cable specification",
+    fMaterial: "Conductor material", optCopper: "Copper", optAluminum: "Aluminium",
+    fInsulation: "Insulation type", optPvc: "PVC — 70 °C max", optXlpe: "XLPE / EPR — 90 °C max",
+    fMethod: "Installation method",
+    optM_A1: "A1 — in conduit in a thermally insulated wall",
+    optM_A2: "A2 — cable in conduit in a thermally insulated wall",
+    optM_B1: "B1 — in conduit on a wall",
+    optM_B2: "B2 — cable in conduit on a wall",
+    optM_C:  "C — clipped direct to a wall or tray",
+    optM_E:  "E/F — in free air or on a perforated tray",
+    fCircuits: "Adjacent circuits", fCircuitsSub: "Cables bunched in one run — grouping factor",
+    secCond: "Route and environment",
+    fLength: "Cable route length (m)", fLengthSub: "One-way distance from the board to the load",
+    fAmbient: "Ambient temperature (°C)", fAmbientSub: "Tabulated capacities assume 30 °C",
+    fMaxDrop: "Maximum permitted voltage drop (%)",
+    optDrop3: "3% — lighting circuits", optDrop5: "5% — power and motor circuits", optDrop8: "8% — long runs",
+    btnCalc: "Calculate cable size",
+    resTitle: "Result",
+    resHint: "The recommended size is the smallest standard cross-section that satisfies both the ampacity and the voltage-drop requirement.",
+    mIb: "Design current Ib", mIz: "Derated capacity Iz", mKtemp: "Temperature factor",
+    mKgroup: "Grouping factor", mTop: "Conductor operating temp.", mRho: "Resistivity at operating temp.",
+    mDropV: "Voltage drop", mMinVd: "Minimum size for voltage drop",
+    barDrop: "Voltage drop against the permitted limit", barLoad: "Cable loading against derated capacity",
+    capDrop: "Governed by: voltage drop",
+    capAmp: "Governed by: current-carrying capacity",
+    noteOk: "Both the ampacity and the voltage-drop requirements are satisfied.",
+    noteDerate: (k, t) => `At ${t} °C ambient the cable capacity is multiplied by a factor of ${k}.`,
+    noteUpsize: (a, d) => `The voltage-drop limit raised the size from ${a} to ${d} mm².`,
+    noteGroup: (k, n) => `With ${n} adjacent circuits a grouping factor of ${k} was applied.`,
+    noteHighUtil: "The cable runs above 90% of its derated capacity — consider the next size up.",
+    errInvalid: "Please enter valid numeric values greater than zero.",
+    errPf: "Power factor must be between 0.1 and 1.",
+    errAmbient: (m) => `Ambient temperature must be below the maximum insulation temperature (${m} °C).`,
+    errTooLarge: "No standard size up to 300 mm² is adequate. Use parallel cables or a higher supply voltage.",
+    docTitle: "Method and technical basis",
+    docHint: "The formulas, references and assumptions behind this tool.",
+    doc1t: "1. Design current",
+    doc1p: "The design current is derived from load power and power factor:",
+    doc2t: "2. Effect of ambient temperature",
+    doc2p1: "Ambient temperature affects cable selection along two independent paths, both accounted for here:",
+    doc2l1: "<b>Reduced current-carrying capacity:</b> tabulated capacities assume a 30 °C reference ambient. As ambient temperature rises, the permitted conductor temperature rise shrinks, so capacity is multiplied by a temperature correction factor (IEC 60364-5-52, Table B.52.14).",
+    doc2l2: "<b>Increased conductor resistance:</b> metal resistance rises with temperature, which increases voltage drop. Resistivity is evaluated at the actual conductor operating temperature, not at 20 °C.",
+    doc2p2: "The temperature coefficient α is taken as 0.00393 for copper and 0.00403 for aluminium.",
+    tblAmb: "Ambient (°C)", tblPvc: "PVC factor (70 °C)", tblXlpe: "XLPE factor (90 °C)",
+    doc3t: "3. Current-carrying capacity check",
+    doc3p: "The base capacity is read from the IEC 60364-5-52 tables for the conductor material, insulation, installation method and number of loaded conductors, then multiplied by the correction factors:",
+    doc3p2: "Grouping factors for bunched cables follow Table B.52.17 (2 circuits: 0.80 · 3 circuits: 0.70 · 4 circuits: 0.65, and so on).",
+    doc4t: "4. Voltage drop check",
+    doc4p: "Voltage drop is computed from both the resistance and the reactance of the route:",
+    doc4p2: "Here R' = ρ(θ)/A is the resistance per metre of conductor and X' the reactance per metre (a typical 0.08 Ω/km for LV multicore cables).",
+    doc5t: "5. Assumptions and limitations",
+    doc5l1: "Base capacities are for copper conductors installed in air; aluminium uses an approximate 0.78 factor.",
+    doc5l2: "Harmonics, motor starting current and cables buried directly in soil are not modelled.",
+    doc5l3: "Coordination with the protective device (Ib ≤ In ≤ Iz) and short-circuit withstand must be verified separately.",
+    doc5l4: "Standard size range: 1.5 to 300 mm². Use parallel cables for larger loads.",
+    ftBy: "Designed and developed by", ftName: "— Mohammad Narimousaei", ftLicense: "Released under the MIT License",
+    ftDisclaimer: "This tool is intended for engineering estimation and preliminary studies. Its results do not replace detailed design calculations, national wiring regulations, or sign-off by a qualified electrical engineer."
+  }
+};
+
+let lang = "fa";
+let lastResult = null;
+
+/** Applies the active language to every translatable node. */
+function applyLanguage(next) {
+  lang = next;
+  const dict = I18N[lang];
+  const rtl = lang === "fa";
+
+  document.documentElement.lang = lang;
+  document.documentElement.dir = rtl ? "rtl" : "ltr";
+  document.title = dict._title;
+
+  document.querySelectorAll("[data-i18n]").forEach(el => {
+    const value = dict[el.dataset.i18n];
+    if (typeof value === "string") el.innerHTML = value;
+  });
+
+  document.getElementById("langLabel").textContent = rtl ? "EN" : "فا";
+  document.getElementById("ftVersion").title = rtl ? "تاریخچه نسخه‌ها" : "Version history";
+  try { localStorage.setItem("cablesizer.lang", lang); } catch (_) {}
+
+  if (lastResult) render(lastResult);
+}
+
+/* =========================================================================
+   Form plumbing
+   ========================================================================= */
+
+const $ = (id) => document.getElementById(id);
+
+/** Wires a segmented control and returns a getter for its current value. */
+function segment(containerId, onChange) {
+  const box = $(containerId);
+  box.addEventListener("click", (event) => {
+    const btn = event.target.closest("button");
+    if (!btn) return;
+    box.querySelectorAll("button").forEach(b => b.setAttribute("aria-pressed", String(b === btn)));
+    if (onChange) onChange(btn.dataset.val);
+  });
+  return () => box.querySelector('[aria-pressed="true"]').dataset.val;
+}
+
+const getPhase = segment("phaseSeg", (value) => {
+  // Suggest the conventional nominal voltage for the selected system.
+  $("voltage").value = value === "single" ? 230 : 400;
+});
+
+const getLoadMode = segment("loadSeg", (value) => {
+  const byPower = value === "power";
+  $("powerField").hidden = !byPower;
+  $("pfField").hidden = false;
+  $("currentField").hidden = byPower;
+});
+
+/**
+ * Reads a numeric input, accepting Persian and Arabic-Indic digits as well as
+ * a comma or Arabic decimal separator. Returns NaN for anything not a plain number.
+ */
+function num(id) {
+  const raw = $(id).value
+    .replace(/[۰-۹]/g, d => String(d.charCodeAt(0) - 0x06F0))
+    .replace(/[٠-٩]/g, d => String(d.charCodeAt(0) - 0x0660))
+    .replace(/[٫,]/g, ".")
+    .trim();
+  return /^[+-]?(\d+\.?\d*|\.\d+)$/.test(raw) ? parseFloat(raw) : NaN;
+}
+
+function flagInvalid(ids) {
+  document.querySelectorAll("[aria-invalid]").forEach(el => el.removeAttribute("aria-invalid"));
+  ids.forEach(id => $(id).setAttribute("aria-invalid", "true"));
+}
+
+/* =========================================================================
+   Rendering
+   ========================================================================= */
+
+const ICONS = {
+  ok:  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>',
+  info:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 7.5v.01"/></svg>',
+  bad: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v6M12 16.5v.01"/></svg>'
+};
+
+function note(kind, text) {
+  const icon = kind === "ok" ? ICONS.ok : kind === "bad" ? ICONS.bad : ICONS.info;
+  return `<div class="note ${kind}">${icon}<span>${text}</span></div>`;
+}
+
+function showError(message) {
+  lastResult = null;
+  $("results").hidden = false;
+  $("rSize").textContent = "—";
+  $("rCaption").textContent = "";
+  ["rIb","rIz","rKt","rKg","rTop","rRho","rDropV","rMinVd","rDropPct","rDropLim","rUtil"]
+    .forEach(id => $(id).textContent = "—");
+  $("rDropBar").style.width = "0";
+  $("rUtilBar").style.width = "0";
+  $("rNotes").innerHTML = note("bad", message);
+  $("results").scrollIntoView({behavior: "smooth", block: "nearest"});
+}
+
+function barClass(ratio) {
+  return ratio <= 0.75 ? "ok" : ratio <= 1 ? "warn" : "bad";
+}
+
+function render(data) {
+  lastResult = data;
+  const dict = I18N[lang];
+  const {cfg, result} = data;
+
+  $("results").hidden = false;
+  $("rSize").textContent = result.size;
+  $("rCaption").textContent = result.governedBy === "drop" ? dict.capDrop : dict.capAmp;
+
+  $("rIb").textContent    = cfg.current.toFixed(1);
+  $("rIz").textContent    = result.iz.toFixed(1);
+  $("rKt").textContent    = result.kTemp.toFixed(2);
+  $("rKg").textContent    = result.kGroup.toFixed(2);
+  $("rTop").textContent   = result.opTemp.toFixed(0);
+  $("rRho").textContent   = result.rho.toFixed(5);
+  $("rDropV").textContent = result.dropV.toFixed(2);
+  $("rMinVd").textContent = result.dropMin;
+
+  const dropRatio = result.dropPct / result.dropLimitPct;
+  $("rDropPct").textContent = result.dropPct.toFixed(2);
+  $("rDropLim").textContent = result.dropLimitPct;
+  $("rDropBar").style.width = Math.min(100, dropRatio * 100).toFixed(1) + "%";
+  $("rDropBar").className = barClass(dropRatio);
+
+  const util = result.utilisation;
+  $("rUtil").textContent = util.toFixed(0);
+  $("rUtilBar").style.width = Math.min(100, util).toFixed(1) + "%";
+  $("rUtilBar").className = barClass(util / 100);
+
+  // Cross-section circle, scaled by diameter across the standard range.
+  const radius = 8 + 32 * (Math.sqrt(result.size) - Math.sqrt(SIZES[0])) /
+                        (Math.sqrt(SIZES[SIZES.length - 1]) - Math.sqrt(SIZES[0]));
+  $("rCircle").setAttribute("r", radius.toFixed(1));
+
+  const notes = [note("ok", dict.noteOk)];
+  if (Math.abs(result.kTemp - 1) > 0.005) {
+    notes.push(note("info", dict.noteDerate(result.kTemp.toFixed(2), cfg.ambient)));
+  }
+  if (result.kGroup < 1) {
+    notes.push(note("info", dict.noteGroup(result.kGroup.toFixed(2), cfg.circuits)));
+  }
+  if (result.dropMin > result.ampacityMin) {
+    notes.push(note("info", dict.noteUpsize(result.ampacityMin, result.dropMin)));
+  }
+  if (util > 90) {
+    notes.push(note("warn", dict.noteHighUtil));
+  }
+  $("rNotes").innerHTML = notes.join("");
+}
+
+/* =========================================================================
+   Entry point
+   ========================================================================= */
+
+function calculate() {
+  const dict = I18N[lang];
+  const phase = getPhase();
+  const byPower = getLoadMode() === "power";
+
+  const voltage = num("voltage");
+  const length  = num("length");
+  const pf      = num("pf");
+  const ambient = num("ambient");
+  const load    = byPower ? num("power") : num("current");
+
+  const invalid = [];
+  if (!(voltage > 0)) invalid.push("voltage");
+  if (!(length > 0))  invalid.push("length");
+  if (!(load > 0))    invalid.push(byPower ? "power" : "current");
+  if (Number.isNaN(ambient)) invalid.push("ambient");
+  if (invalid.length) { flagInvalid(invalid); return showError(dict.errInvalid); }
+
+  if (!(pf >= 0.1 && pf <= 1)) { flagInvalid(["pf"]); return showError(dict.errPf); }
+  flagInvalid([]);
+
+  const current = byPower
+    ? (phase === "single" ? load * 1000 / (voltage * pf)
+                          : load * 1000 / (Math.sqrt(3) * voltage * pf))
+    : load;
+
+  const cfg = {
+    phase, voltage, current, pf, length, ambient,
+    material: $("material").value,
+    insulation: $("insulation").value,
+    method: parseInt($("method").value, 10),
+    circuits: parseInt($("circuits").value, 10),
+    maxDropPct: parseFloat($("maxDrop").value),
+    loadedConductors: phase === "single" ? 2 : 3
+  };
+
+  const result = sizeCable(cfg);
+  if (result.error === "ambientTooHigh") return showError(dict.errAmbient(result.maxTemp));
+  if (result.error) return showError(dict.errTooLarge);
+
+  render({cfg, result});
+  $("results").scrollIntoView({behavior: "smooth", block: "nearest"});
+}
+
+$("calcForm").addEventListener("submit", (event) => { event.preventDefault(); calculate(); });
+
+$("langBtn").addEventListener("click", () => applyLanguage(lang === "fa" ? "en" : "fa"));
+
+$("themeBtn").addEventListener("click", () => {
+  const next = document.documentElement.dataset.theme === "dark" ? "light" : "dark";
+  document.documentElement.dataset.theme = next;
+  try { localStorage.setItem("cablesizer.theme", next); } catch (_) {}
+});
+
+// Restore saved preferences, falling back to the system colour scheme.
+(function init() {
+  let savedLang = null, savedTheme = null;
+  try {
+    savedLang = localStorage.getItem("cablesizer.lang");
+    savedTheme = localStorage.getItem("cablesizer.theme");
+  } catch (_) {}
+
+  const prefersDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+  document.documentElement.dataset.theme = savedTheme || (prefersDark ? "dark" : "light");
+
+  applyLanguage(savedLang === "en" ? "en" : "fa");
+})();
+</script>
 </body>
 </html>
