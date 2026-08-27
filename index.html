@@ -547,6 +547,8 @@ footer .disclaimer{
     <div style="margin-top:6px">
       <a href="https://github.com/m0000hamad/CableSizer" target="_blank" rel="noopener">GitHub</a>
       <span class="sep">·</span>
+      <a href="https://github.com/m0000hamad/CableSizer/blob/main/CHANGELOG.md" target="_blank" rel="noopener" id="ftVersion">v1.1.0</a>
+      <span class="sep">·</span>
       <span data-i18n="ftLicense">انتشار تحت مجوز MIT</span>
     </div>
     <p class="disclaimer" data-i18n="ftDisclaimer">
@@ -868,6 +870,7 @@ function applyLanguage(next) {
   });
 
   document.getElementById("langLabel").textContent = rtl ? "EN" : "فا";
+  document.getElementById("ftVersion").title = rtl ? "تاریخچه نسخه‌ها" : "Version history";
   try { localStorage.setItem("cablesizer.lang", lang); } catch (_) {}
 
   if (lastResult) render(lastResult);
@@ -1072,7 +1075,7 @@ $("themeBtn").addEventListener("click", () => {
   const prefersDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
   document.documentElement.dataset.theme = savedTheme || (prefersDark ? "dark" : "light");
 
-  if (savedLang === "en" || savedLang === "fa") applyLanguage(savedLang);
+  applyLanguage(savedLang === "en" ? "en" : "fa");
 })();
 </script>
 </body>

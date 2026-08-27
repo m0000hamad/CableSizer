@@ -8,6 +8,9 @@
 
 [**▶ Launch the app / اجرای برنامه**](https://m0000hamad.github.io/CableSizer/)
 
+[![Latest version](https://img.shields.io/github/v/tag/m0000hamad/CableSizer?label=version&sort=semver)](https://github.com/m0000hamad/CableSizer/blob/main/CHANGELOG.md)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+
 </div>
 
 ---
@@ -125,6 +128,21 @@ cd CableSizer
 ```
 
 </div>
+
+---
+
+## Version history / تاریخچه نسخه‌ها
+
+The live app always reflects the latest release. Every previous version stays documented and
+reachable — see the full **[CHANGELOG](CHANGELOG.md)** and the [tagged releases](https://github.com/m0000hamad/CableSizer/tags).
+<br>
+اپلیکیشن همیشه آخرین نسخه منتشرشده را نمایش می‌دهد. تمام نسخه‌های قبلی مستند و در دسترس باقی می‌مانند —
+به **[CHANGELOG](CHANGELOG.md)** کامل و [نسخه‌های تگ‌شده](https://github.com/m0000hamad/CableSizer/tags) مراجعه کنید.
+
+| Version | Date | Summary |
+|---|---|---|
+| [1.1.0](CHANGELOG.md#110--2026-08-27) | 2026-08-27 | IEC 60364-5-52 sizing (ampacity + voltage drop), ambient temperature, bilingual UI |
+| [1.0.0](CHANGELOG.md#100--2025) | 2025 | Initial single-page voltage-drop calculator |
 
 ---
 
