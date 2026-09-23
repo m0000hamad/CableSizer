@@ -26,7 +26,11 @@ in the browser — no installation, no server, no data leaves the page.
 - **Dual sizing criteria** — checks ampacity and voltage drop, and reports which one governed the result.
 - **Ambient temperature** applied along both of its physical paths: derating of the cable's
   current-carrying capacity, and the increase in conductor resistance that raises voltage drop.
-- **Installation method** — six IEC reference methods (A1, A2, B1, B2, C, E/F).
+- **Installation method** — eight IEC reference methods (A1, A2, B1, B2, C, D1, D2, E/F), including
+  buried cables with ground-temperature and buried-grouping factors, with an in-form guide that
+  matches each code to everyday installation examples (ground surface and water crossings covered).
+- **Cable identification help** — how to tell PVC from XLPE by the sheath marking (NYY, NYM, H07V-U
+  vs. N2XY, aerial bundled cable).
 - **Grouping factor** for circuits bunched together in a common route.
 - **Copper and aluminium** conductors, **PVC (70 °C)** and **XLPE/EPR (90 °C)** insulation.
 - Load defined by either **power (kW)** with power factor, or directly by **design current (A)**.
@@ -52,7 +56,8 @@ temperatures are linearly interpolated. Standard cross-sections range from 1.5 m
 
 - Base capacities are tabulated for copper; aluminium uses an approximate 0.78 factor.
 - Reactance is taken as a typical 0.08 Ω/km for LV multicore cables.
-- Harmonic loading, motor starting current, and cables buried directly in soil are not modelled.
+- Harmonic loading, motor starting current, and cables submerged in water are not modelled.
+- Buried ratings assume a 20 °C ground temperature, 0.7 m laying depth and 2.5 K·m/W soil thermal resistivity.
 - Coordination with the protective device (`Ib ≤ In ≤ Iz`) and short-circuit withstand must be
   verified separately.
 
@@ -85,7 +90,11 @@ cd CableSizer
 - **دو معیار همزمان** — بررسی ظرفیت جریان‌دهی و افت ولتاژ، همراه با اعلام اینکه کدام معیار تعیین‌کننده بوده است.
 - **دمای محیط** از هر دو مسیر فیزیکی آن اعمال می‌شود: کاهش ظرفیت جریان‌دهی کابل، و افزایش مقاومت
   هادی که افت ولتاژ را بالا می‌برد.
-- **روش نصب** — شش روش مرجع استاندارد (A1، A2، B1، B2، C، E/F).
+- **روش نصب** — هشت روش مرجع استاندارد (A1، A2، B1، B2، C، D1، D2، E/F) شامل کابل‌های دفنی با
+  ضرایب دمای خاک و تجمع دفنی، همراه با راهنمای درون‌فرمی که هر کد را به مثال‌های روزمره نصب
+  پیوند می‌زند (کابل روی سطح خاک و عبور از آب هم پوشش داده شده است).
+- **راهنمای تشخیص کابل** — تشخیص PVC از XLPE از روی چاپ روکش کابل (NYY، NYM و افشان ساختمانی
+  در برابر N2XY و کابل هوایی خودنگهدار).
 - **ضریب تجمع** برای کابل‌های کنار هم در یک مسیر مشترک.
 - هادی **مس و آلومینیوم**، عایق **PVC (۷۰ درجه)** و **XLPE/EPR (۹۰ درجه)**.
 - تعریف بار بر اساس **توان (کیلووات)** با ضریب توان، یا مستقیماً بر اساس **جریان طراحی (آمپر)**.
@@ -111,7 +120,8 @@ cd CableSizer
 
 - ظرفیت‌های مبنا برای هادی مسی جدول‌بندی شده‌اند؛ برای آلومینیوم ضریب تقریبی ۰٫۷۸ اعمال می‌شود.
 - راکتانس برابر مقدار نوعی ۰٫۰۸ اهم بر کیلومتر برای کابل‌های چندرشته‌ای فشار ضعیف در نظر گرفته شده است.
-- اثر هارمونیک‌ها، جریان راه‌اندازی موتور و کابل‌های دفنی در خاک مدل نشده است.
+- اثر هارمونیک‌ها، جریان راه‌اندازی موتور و کابل‌های غوطه‌ور در آب مدل نشده است.
+- ظرفیت‌های دفنی بر مبنای دمای خاک ۲۰°C، عمق دفن ۰٫۷ متر و مقاومت حرارتی خاک ۲٫۵ K·m/W است.
 - هماهنگی با وسیله حفاظتی (`Ib ≤ In ≤ Iz`) و بررسی تحمل اتصال کوتاه باید جداگانه انجام شود.
 
 > این ابزار برای برآورد مهندسی و مطالعات اولیه تهیه شده است. نتایج آن جایگزین محاسبات تفصیلی،
@@ -141,6 +151,8 @@ reachable — see the full **[CHANGELOG](CHANGELOG.md)** and the [tagged release
 
 | Version | Date | Summary |
 |---|---|---|
+| [1.3.0](CHANGELOG.md#130--2026-09-23) | 2026-09-23 | Buried methods D1/D2 with soil factors, ground/water guidance, grouping explained |
+| [1.2.0](CHANGELOG.md#120--2026-09-23) | 2026-09-23 | In-form guide for recognising cable insulation and installation methods, clearer method labels |
 | [1.1.0](CHANGELOG.md#110--2026-08-27) | 2026-08-27 | IEC 60364-5-52 sizing (ampacity + voltage drop), ambient temperature, bilingual UI |
 | [1.0.0](CHANGELOG.md#100--2025) | 2025 | Initial single-page voltage-drop calculator |
 
