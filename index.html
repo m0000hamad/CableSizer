@@ -238,6 +238,14 @@ th,td{border:1px solid var(--border);padding:6px 9px;text-align:start}
 th{background:var(--surface-2);font-weight:600;color:var(--text)}
 td{font-variant-numeric:tabular-nums}
 
+/* In-form selection guide: a boxed help panel living inside the cable fieldset. */
+details.doc.cable-guide{
+  margin-top:20px;border:1px dashed var(--border);border-radius:12px;
+  background:var(--surface-2);padding:4px 16px 10px;
+}
+details.doc.cable-guide summary{padding:9px 0}
+details.doc.cable-guide[open]{border-style:solid}
+
 /* ---------- footer ---------- */
 footer{
   text-align:center;padding-top:10px;font-size:.83rem;color:var(--text-muted);
@@ -360,18 +368,20 @@ footer .disclaimer{
               <option value="pvc" data-i18n="optPvc">PVC — حداکثر ۷۰°C</option>
               <option value="xlpe" data-i18n="optXlpe">XLPE / EPR — حداکثر ۹۰°C</option>
             </select>
+            <span class="sub" data-i18n="fInsulationSub">نوع عایق روی روکش کابل چاپ می‌شود؛ اگر مطمئن نیستید PVC بگیرید</span>
           </div>
 
           <div class="field">
             <label for="method" data-i18n="fMethod">روش نصب</label>
             <select id="method">
-              <option value="0" data-i18n="optM_A1">A1 — داخل لوله در دیوار عایق‌کاری‌شده</option>
-              <option value="1" data-i18n="optM_A2">A2 — کابل داخل لوله در دیوار عایق‌کاری‌شده</option>
-              <option value="2" selected data-i18n="optM_B1">B1 — داخل لوله روی دیوار</option>
-              <option value="3" data-i18n="optM_B2">B2 — کابل داخل لوله روی دیوار</option>
-              <option value="4" data-i18n="optM_C">C — نصب مستقیم روی دیوار یا سینی</option>
-              <option value="5" data-i18n="optM_E">E/F — در هوای آزاد یا سینی مشبک</option>
+              <option value="0" data-i18n="optM_A1">A1 — سیم‌های تکی در لوله، در دیوار دارای عایق حرارتی</option>
+              <option value="1" data-i18n="optM_A2">A2 — کابل چندرشته در لوله، در دیوار دارای عایق حرارتی</option>
+              <option value="2" selected data-i18n="optM_B1">B1 — سیم‌های تکی در لوله/داکت روی دیوار یا زیر سقف</option>
+              <option value="3" data-i18n="optM_B2">B2 — کابل چندرشته در لوله/داکت روی دیوار</option>
+              <option value="4" data-i18n="optM_C">C — کابل بست‌خورده روی دیوار یا زیر سقف</option>
+              <option value="5" data-i18n="optM_E">E/F — کابل در هوای آزاد یا روی سینی مشبک</option>
             </select>
+            <span class="sub" data-i18n="fMethodSub">کد بر اساس نحوه دفع حرارت مسیر کابل تعیین می‌شود — راهنمای پایین را ببینید</span>
           </div>
 
           <div class="field">
@@ -387,6 +397,33 @@ footer .disclaimer{
             <span class="sub" data-i18n="fCircuitsSub">کابل‌های کنار هم در یک مسیر — ضریب تجمع</span>
           </div>
         </div>
+
+        <details class="doc cable-guide">
+          <summary data-i18n="guideT">کدام را انتخاب کنم؟ راهنمای نوع کابل و روش نصب</summary>
+          <div class="body">
+            <p data-i18n="guideMat"><b>جنس هادی:</b> بیشتر مدارهای ساختمانی مسی‌اند. آلومینیوم عمدتاً در فیدرهای قدرت پرجریان یا کابل‌های هوایی به‌کار می‌رود و برای همان بار به مقطع بزرگ‌تری نیاز دارد.</p>
+            <p data-i18n="guideIns"><b>نوع عایق:</b> از روی چاپِ روکش کابل خوانده می‌شود. <b>PVC</b> (حداکثر ۷۰°C) عایقِ بیشتر کابل‌های ساختمانی و شبکه‌ای است؛ مثل کابل NYY و NYM و سیم افشان ساختمانی (H07V-U / NYA). <b>XLPE</b> یا <b>EPR</b> (حداکثر ۹۰°C) برای کابل‌های کراس‌لینک است؛ مثل N2XY یا کابل هوایی خودنگهدار که معمولاً «XLPE» یا «90°C» روی روکش آن‌ها نوشته شده است. اگر چیزی روی کابل خوانده نمی‌شود، همان PVC را انتخاب کنید؛ نتیجه محافظه‌کارانه‌تر خواهد بود.</p>
+            <p data-i18n="guideMet"><b>روش نصب:</b> این کدها بر اساس استاندارد IEC 60364-5-52 تعریف شده‌اند و فقط نحوه دفع حرارت کابل به محیط اطراف را توصیف می‌کنند. نزدیک‌ترین حالت به مسیر کابل خود را برگزینید:</p>
+            <div class="tbl-scroll">
+              <table>
+                <thead><tr>
+                  <th data-i18n="gColCode">کد</th>
+                  <th data-i18n="gColCond">وضعیت نصب</th>
+                  <th data-i18n="gColEx">مثال رایج</th>
+                </tr></thead>
+                <tbody>
+                  <tr><th>A1</th><td data-i18n="gA1d">سیم‌های تکی در لوله/داکت، داخل دیواری که عایق حرارتی دارد</td><td data-i18n="gA1e">افشان در لوله فلکسیبل، در دیوار یونولیت‌دار یا پشم‌سنگ</td></tr>
+                  <tr><th>A2</th><td data-i18n="gA2d">کابل چندرشته در لوله/داکت، داخل دیوار دارای عایق حرارتی</td><td data-i18n="gA2e">کابل NYY در لوله، در همان دیوار عایق‌شده</td></tr>
+                  <tr><th>B1</th><td data-i18n="gB1d">سیم‌های تکی در لوله/داکت روی دیوار، زیر سقف کاذب یا در دیوار آجری معمولی</td><td data-i18n="gB1e">افشان در لوله خرطومی روکار یا در دیوار آجری بدون عایق</td></tr>
+                  <tr><th>B2</th><td data-i18n="gB2d">کابل چندرشته در لوله/داکت روی دیوار</td><td data-i18n="gB2e">کابل NYY در داکت یا لوله روکار</td></tr>
+                  <tr><th>C</th><td data-i18n="gCd">کابل با بست مستقیم روی دیوار یا زیر سقف، بدون لوله</td><td data-i18n="gCe">کابل بست‌خورده روی دیوار کارگاه یا سقف انبار</td></tr>
+                  <tr><th>E/F</th><td data-i18n="gEd">کابل در هوای آزاد یا روی سینی مشبک، دور از سطح دیوار</td><td data-i18n="gEe">کابل روی سینی مشبک در اتاق برق یا مسیر بیرون ساختمان</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p data-i18n="guideMetHint">هرچه مسیر محصورتر و عایق‌تر باشد، کابل دیرتر خنک می‌شود و ظرفیتش کمتر است. اگر وضعیت شما بین دو ردیف می‌گنجد، ردیف محدودکننده‌تر (دفع حرارت کندتر) را انتخاب کنید.</p>
+          </div>
+        </details>
       </fieldset>
 
       <fieldset>
@@ -547,7 +584,7 @@ footer .disclaimer{
     <div style="margin-top:6px">
       <a href="https://github.com/m0000hamad/CableSizer" target="_blank" rel="noopener">GitHub</a>
       <span class="sep">·</span>
-      <a href="https://github.com/m0000hamad/CableSizer/blob/main/CHANGELOG.md" target="_blank" rel="noopener" id="ftVersion">v1.1.0</a>
+      <a href="https://github.com/m0000hamad/CableSizer/blob/main/CHANGELOG.md" target="_blank" rel="noopener" id="ftVersion">v1.2.0</a>
       <span class="sep">·</span>
       <span data-i18n="ftLicense">انتشار تحت مجوز MIT</span>
     </div>
@@ -727,12 +764,32 @@ const I18N = {
     fMaterial: "جنس هادی", optCopper: "مس", optAluminum: "آلومینیوم",
     fInsulation: "نوع عایق", optPvc: "PVC — حداکثر ۷۰°C", optXlpe: "XLPE / EPR — حداکثر ۹۰°C",
     fMethod: "روش نصب",
-    optM_A1: "A1 — داخل لوله در دیوار عایق‌کاری‌شده",
-    optM_A2: "A2 — کابل داخل لوله در دیوار عایق‌کاری‌شده",
-    optM_B1: "B1 — داخل لوله روی دیوار",
-    optM_B2: "B2 — کابل داخل لوله روی دیوار",
-    optM_C:  "C — نصب مستقیم روی دیوار یا سینی",
-    optM_E:  "E/F — در هوای آزاد یا سینی مشبک",
+    optM_A1: "A1 — سیم‌های تکی در لوله، در دیوار دارای عایق حرارتی",
+    optM_A2: "A2 — کابل چندرشته در لوله، در دیوار دارای عایق حرارتی",
+    optM_B1: "B1 — سیم‌های تکی در لوله/داکت روی دیوار یا زیر سقف",
+    optM_B2: "B2 — کابل چندرشته در لوله/داکت روی دیوار",
+    optM_C:  "C — کابل بست‌خورده روی دیوار یا زیر سقف",
+    optM_E:  "E/F — کابل در هوای آزاد یا روی سینی مشبک",
+    fInsulationSub: "نوع عایق روی روکش کابل چاپ می‌شود؛ اگر مطمئن نیستید PVC بگیرید",
+    fMethodSub: "کد بر اساس نحوه دفع حرارت مسیر کابل تعیین می‌شود — راهنمای پایین را ببینید",
+    guideT: "کدام را انتخاب کنم؟ راهنمای نوع کابل و روش نصب",
+    guideMat: "<b>جنس هادی:</b> بیشتر مدارهای ساختمانی مسی‌اند. آلومینیوم عمدتاً در فیدرهای قدرت پرجریان یا کابل‌های هوایی به‌کار می‌رود و برای همان بار به مقطع بزرگ‌تری نیاز دارد.",
+    guideIns: "<b>نوع عایق:</b> از روی چاپِ روکش کابل خوانده می‌شود. <b>PVC</b> (حداکثر ۷۰°C) عایقِ بیشتر کابل‌های ساختمانی و شبکه‌ای است؛ مثل کابل NYY و NYM و سیم افشان ساختمانی (H07V-U / NYA). <b>XLPE</b> یا <b>EPR</b> (حداکثر ۹۰°C) برای کابل‌های کراس‌لینک است؛ مثل N2XY یا کابل هوایی خودنگهدار که معمولاً «XLPE» یا «90°C» روی روکش آن‌ها نوشته شده است. اگر چیزی روی کابل خوانده نمی‌شود، همان PVC را انتخاب کنید؛ نتیجه محافظه‌کارانه‌تر خواهد بود.",
+    guideMet: "<b>روش نصب:</b> این کدها بر اساس استاندارد IEC 60364-5-52 تعریف شده‌اند و فقط نحوه دفع حرارت کابل به محیط اطراف را توصیف می‌کنند. نزدیک‌ترین حالت به مسیر کابل خود را برگزینید:",
+    gColCode: "کد", gColCond: "وضعیت نصب", gColEx: "مثال رایج",
+    gA1d: "سیم‌های تکی در لوله/داکت، داخل دیواری که عایق حرارتی دارد",
+    gA1e: "افشان در لوله فلکسیبل، در دیوار یونولیت‌دار یا پشم‌سنگ",
+    gA2d: "کابل چندرشته در لوله/داکت، داخل دیوار دارای عایق حرارتی",
+    gA2e: "کابل NYY در لوله، در همان دیوار عایق‌شده",
+    gB1d: "سیم‌های تکی در لوله/داکت روی دیوار، زیر سقف کاذب یا در دیوار آجری معمولی",
+    gB1e: "افشان در لوله خرطومی روکار یا در دیوار آجری بدون عایق",
+    gB2d: "کابل چندرشته در لوله/داکت روی دیوار",
+    gB2e: "کابل NYY در داکت یا لوله روکار",
+    gCd: "کابل با بست مستقیم روی دیوار یا زیر سقف، بدون لوله",
+    gCe: "کابل بست‌خورده روی دیوار کارگاه یا سقف انبار",
+    gEd: "کابل در هوای آزاد یا روی سینی مشبک، دور از سطح دیوار",
+    gEe: "کابل روی سینی مشبک در اتاق برق یا مسیر بیرون ساختمان",
+    guideMetHint: "هرچه مسیر محصورتر و عایق‌تر باشد، کابل دیرتر خنک می‌شود و ظرفیتش کمتر است. اگر وضعیت شما بین دو ردیف می‌گنجد، ردیف محدودکننده‌تر (دفع حرارت کندتر) را انتخاب کنید.",
     fCircuits: "تعداد مدارهای مجاور", fCircuitsSub: "کابل‌های کنار هم در یک مسیر — ضریب تجمع",
     secCond: "شرایط محیط و مسیر",
     fLength: "طول مسیر کابل (m)", fLengthSub: "فاصله یک‌طرفه از تابلو تا مصرف‌کننده",
@@ -795,12 +852,32 @@ const I18N = {
     fMaterial: "Conductor material", optCopper: "Copper", optAluminum: "Aluminium",
     fInsulation: "Insulation type", optPvc: "PVC — 70 °C max", optXlpe: "XLPE / EPR — 90 °C max",
     fMethod: "Installation method",
-    optM_A1: "A1 — in conduit in a thermally insulated wall",
-    optM_A2: "A2 — cable in conduit in a thermally insulated wall",
-    optM_B1: "B1 — in conduit on a wall",
-    optM_B2: "B2 — cable in conduit on a wall",
-    optM_C:  "C — clipped direct to a wall or tray",
-    optM_E:  "E/F — in free air or on a perforated tray",
+    optM_A1: "A1 — single wires in conduit, in an insulated wall",
+    optM_A2: "A2 — multicore cable in conduit, in an insulated wall",
+    optM_B1: "B1 — single wires in conduit/trunking on a wall",
+    optM_B2: "B2 — multicore cable in conduit/trunking on a wall",
+    optM_C:  "C — cable clipped direct on a wall or ceiling",
+    optM_E:  "E/F — cable in free air or on a perforated tray",
+    fInsulationSub: "Read it off the cable sheath — when in doubt, pick PVC.",
+    fMethodSub: "The code reflects how the run releases heat — see the guide below.",
+    guideT: "Which one do I pick? Cable type & installation method guide",
+    guideMat: "<b>Conductor material:</b> most building circuits are copper. Aluminium is mostly used in high-current power feeders or aerial lines, and needs a larger cross-section for the same load.",
+    guideIns: "<b>Insulation type:</b> printed on the cable sheath. <b>PVC</b> (70 °C max) covers most building and distribution cables — e.g. NYY, NYM and H07V-U building wire. <b>XLPE</b> or <b>EPR</b> (90 °C max) is found in cross-linked cables such as N2XY or aerial bundled cable, usually marked «XLPE» or «90 °C». If nothing is legible, choose PVC — the result stays on the safe side.",
+    guideMet: "<b>Installation method:</b> these codes come from IEC 60364-5-52 and describe only how the cable releases heat to its surroundings. Pick the row closest to your run:",
+    gColCode: "Code", gColCond: "Installation condition", gColEx: "Everyday example",
+    gA1d: "Single wires in conduit/trunking, inside a thermally insulated wall",
+    gA1e: "Building wire in flex conduit, in a wall packed with foam or mineral wool",
+    gA2d: "Multicore cable in conduit/trunking, inside a thermally insulated wall",
+    gA2e: "An NYY cable in conduit, in such an insulated wall",
+    gB1d: "Single wires in conduit/trunking on a wall, above a false ceiling, or in an ordinary masonry wall",
+    gB1e: "Building wire in surface conduit, or in a brick wall without thermal insulation",
+    gB2d: "Multicore cable in conduit/trunking on a wall",
+    gB2e: "An NYY cable in surface trunking or conduit",
+    gCd: "Cable fixed direct on a wall or under a ceiling, no conduit",
+    gCe: "Cable cleated to a workshop wall or across a store-room ceiling",
+    gEd: "Cable in free air or on a perforated tray, clear of surfaces",
+    gEe: "Cable on perforated tray in an electrical room, or an outdoor span",
+    guideMetHint: "The more enclosed the route, the slower the cable cools and the lower its capacity. If your situation falls between two rows, choose the more restrictive one (slower heat dissipation).",
     fCircuits: "Adjacent circuits", fCircuitsSub: "Cables bunched in one run — grouping factor",
     secCond: "Route and environment",
     fLength: "Cable route length (m)", fLengthSub: "One-way distance from the board to the load",

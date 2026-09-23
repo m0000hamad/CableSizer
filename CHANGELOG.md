@@ -6,6 +6,30 @@ All notable changes to CableSizer are documented in this file.
 
 ---
 
+## [1.2.0] — 2026-09-23
+
+**Contextual help for the two vaguest choices: insulation type and installation method.**
+<br>
+**راهنمای محیطی برای دو انتخاب گنگ: نوع عایق و روش نصب.**
+
+### Added / افزوده شد
+- In-form guide inside the cable section: how to tell PVC from XLPE by the sheath marking
+  (NYY, NYM, H07V-U building wire vs. N2XY or aerial bundled cable), and a plain-language table
+  that maps each IEC reference method (A1…E/F) to everyday installation examples.
+  <br>راهنمای درون‌فرمی در بخش کابل: تشخیص PVC از XLPE بر اساس چاپ روکش
+  (کابل NYY و NYM و افشان ساختمانی در برابر N2XY و کابل هوایی خودنگهدار) و جدول روان که
+  هر کد روش نصب (A1…E/F) را به یک مثال نصبِ روزمره پیوند می‌زند.
+- Short hints under the insulation and installation-method fields pointing to that guide.
+  <br>توضیح کوتاه زیر فیلدهای نوع عایق و روش نصب با ارجاع به همان راهنما.
+
+### Changed / تغییر یافت
+- Installation-method option labels now spell out the single-wire vs. multicore difference,
+  so A1/A2 and B1/B2 are no longer lookalikes.
+  <br>برچسب گزینه‌های روش نصب اکنون تفاوت سیم تکی و کابل چندرشته را صریح می‌گوید تا
+  A1/A2 و B1/B2 دیگر شبیه هم دیده نشوند.
+
+---
+
 ## [1.1.0] — 2026-08-27
 
 **Complete rebuild as a standards-based, bilingual sizing tool.**
@@ -55,5 +79,6 @@ All notable changes to CableSizer are documented in this file.
 - No ambient temperature, installation method, or current-carrying capacity check.
   <br>بدون دمای محیط، روش نصب، یا بررسی ظرفیت جریان‌دهی.
 
+[1.2.0]: https://github.com/m0000hamad/CableSizer/compare/v1.1.0...v1.2.0
 [1.1.0]: https://github.com/m0000hamad/CableSizer/compare/v1.0.0...v1.1.0
 [1.0.0]: https://github.com/m0000hamad/CableSizer/releases/tag/v1.0.0

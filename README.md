@@ -26,7 +26,10 @@ in the browser — no installation, no server, no data leaves the page.
 - **Dual sizing criteria** — checks ampacity and voltage drop, and reports which one governed the result.
 - **Ambient temperature** applied along both of its physical paths: derating of the cable's
   current-carrying capacity, and the increase in conductor resistance that raises voltage drop.
-- **Installation method** — six IEC reference methods (A1, A2, B1, B2, C, E/F).
+- **Installation method** — six IEC reference methods (A1, A2, B1, B2, C, E/F), with an in-form guide
+  that matches each code to everyday installation examples.
+- **Cable identification help** — how to tell PVC from XLPE by the sheath marking (NYY, NYM, H07V-U
+  vs. N2XY, aerial bundled cable).
 - **Grouping factor** for circuits bunched together in a common route.
 - **Copper and aluminium** conductors, **PVC (70 °C)** and **XLPE/EPR (90 °C)** insulation.
 - Load defined by either **power (kW)** with power factor, or directly by **design current (A)**.
@@ -85,7 +88,10 @@ cd CableSizer
 - **دو معیار همزمان** — بررسی ظرفیت جریان‌دهی و افت ولتاژ، همراه با اعلام اینکه کدام معیار تعیین‌کننده بوده است.
 - **دمای محیط** از هر دو مسیر فیزیکی آن اعمال می‌شود: کاهش ظرفیت جریان‌دهی کابل، و افزایش مقاومت
   هادی که افت ولتاژ را بالا می‌برد.
-- **روش نصب** — شش روش مرجع استاندارد (A1، A2، B1، B2، C، E/F).
+- **روش نصب** — شش روش مرجع استاندارد (A1، A2، B1، B2، C، E/F)، همراه با راهنمای درون‌فرمی که
+  هر کد را به مثال‌های روزمره نصب پیوند می‌زند.
+- **راهنمای تشخیص کابل** — تشخیص PVC از XLPE از روی چاپ روکش کابل (NYY، NYM و افشان ساختمانی
+  در برابر N2XY و کابل هوایی خودنگهدار).
 - **ضریب تجمع** برای کابل‌های کنار هم در یک مسیر مشترک.
 - هادی **مس و آلومینیوم**، عایق **PVC (۷۰ درجه)** و **XLPE/EPR (۹۰ درجه)**.
 - تعریف بار بر اساس **توان (کیلووات)** با ضریب توان، یا مستقیماً بر اساس **جریان طراحی (آمپر)**.
@@ -141,6 +147,7 @@ reachable — see the full **[CHANGELOG](CHANGELOG.md)** and the [tagged release
 
 | Version | Date | Summary |
 |---|---|---|
+| [1.2.0](CHANGELOG.md#120--2026-09-23) | 2026-09-23 | In-form guide for recognising cable insulation and installation methods, clearer method labels |
 | [1.1.0](CHANGELOG.md#110--2026-08-27) | 2026-08-27 | IEC 60364-5-52 sizing (ampacity + voltage drop), ambient temperature, bilingual UI |
 | [1.0.0](CHANGELOG.md#100--2025) | 2025 | Initial single-page voltage-drop calculator |
 
