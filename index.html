@@ -238,6 +238,14 @@ th,td{border:1px solid var(--border);padding:6px 9px;text-align:start}
 th{background:var(--surface-2);font-weight:600;color:var(--text)}
 td{font-variant-numeric:tabular-nums}
 
+/* In-form selection guide: a boxed help panel living inside the cable fieldset. */
+details.doc.cable-guide{
+  margin-top:20px;border:1px dashed var(--border);border-radius:12px;
+  background:var(--surface-2);padding:4px 16px 10px;
+}
+details.doc.cable-guide summary{padding:9px 0}
+details.doc.cable-guide[open]{border-style:solid}
+
 /* ---------- footer ---------- */
 footer{
   text-align:center;padding-top:10px;font-size:.83rem;color:var(--text-muted);
@@ -360,22 +368,26 @@ footer .disclaimer{
               <option value="pvc" data-i18n="optPvc">PVC — حداکثر ۷۰°C</option>
               <option value="xlpe" data-i18n="optXlpe">XLPE / EPR — حداکثر ۹۰°C</option>
             </select>
+            <span class="sub" data-i18n="fInsulationSub">نوع عایق روی روکش کابل چاپ می‌شود؛ اگر مطمئن نیستید PVC بگیرید</span>
           </div>
 
           <div class="field">
             <label for="method" data-i18n="fMethod">روش نصب</label>
             <select id="method">
-              <option value="0" data-i18n="optM_A1">A1 — داخل لوله در دیوار عایق‌کاری‌شده</option>
-              <option value="1" data-i18n="optM_A2">A2 — کابل داخل لوله در دیوار عایق‌کاری‌شده</option>
-              <option value="2" selected data-i18n="optM_B1">B1 — داخل لوله روی دیوار</option>
-              <option value="3" data-i18n="optM_B2">B2 — کابل داخل لوله روی دیوار</option>
-              <option value="4" data-i18n="optM_C">C — نصب مستقیم روی دیوار یا سینی</option>
-              <option value="5" data-i18n="optM_E">E/F — در هوای آزاد یا سینی مشبک</option>
+              <option value="0" data-i18n="optM_A1">A1 — سیم‌های تکی در لوله، در دیوار دارای عایق حرارتی</option>
+              <option value="1" data-i18n="optM_A2">A2 — کابل چندرشته در لوله، در دیوار دارای عایق حرارتی</option>
+              <option value="2" selected data-i18n="optM_B1">B1 — سیم‌های تکی در لوله/داکت روی دیوار یا زیر سقف</option>
+              <option value="3" data-i18n="optM_B2">B2 — کابل چندرشته در لوله/داکت روی دیوار</option>
+              <option value="4" data-i18n="optM_C">C — کابل بست‌خورده روی دیوار یا زیر سقف</option>
+              <option value="6" data-i18n="optM_D1">D1 — کابل در لوله/داکت دفنی در خاک</option>
+              <option value="7" data-i18n="optM_D2">D2 — کابل مستقیم دفن در خاک</option>
+              <option value="5" data-i18n="optM_E">E/F — کابل در هوای آزاد یا روی سینی مشبک</option>
             </select>
+            <span class="sub" data-i18n="fMethodSub">کد بر اساس نحوه دفع حرارت مسیر کابل تعیین می‌شود — راهنمای پایین را ببینید</span>
           </div>
 
           <div class="field">
-            <label for="circuits" data-i18n="fCircuits">تعداد مدارهای مجاور</label>
+            <label for="circuits" data-i18n="fCircuits">تعداد مدارهای همراه در یک مسیر</label>
             <select id="circuits">
               <option value="1" selected>1</option><option value="2">2</option>
               <option value="3">3</option><option value="4">4</option>
@@ -384,9 +396,42 @@ footer .disclaimer{
               <option value="9">9</option><option value="12">12</option>
               <option value="16">16</option><option value="20">20</option>
             </select>
-            <span class="sub" data-i18n="fCircuitsSub">کابل‌های کنار هم در یک مسیر — ضریب تجمع</span>
+            <span class="sub" data-i18n="fCircuitsSub">با احتساب خود مدار شما؛ فقط مدارهای هم‌زمانِ زیر بار شمرده می‌شوند — مثال‌ها در راهنمای انتخاب</span>
           </div>
         </div>
+
+        <details class="doc cable-guide">
+          <summary data-i18n="guideT">کدام را انتخاب کنم؟ راهنمای نوع کابل و روش نصب</summary>
+          <div class="body">
+            <p data-i18n="guideMat"><b>جنس هادی:</b> بیشتر مدارهای ساختمانی مسی‌اند. آلومینیوم عمدتاً در فیدرهای قدرت پرجریان یا کابل‌های هوایی به‌کار می‌رود و برای همان بار به مقطع بزرگ‌تری نیاز دارد.</p>
+            <p data-i18n="guideIns"><b>نوع عایق:</b> از روی چاپِ روکش کابل خوانده می‌شود. <b>PVC</b> (حداکثر ۷۰°C) عایقِ بیشتر کابل‌های ساختمانی و شبکه‌ای است؛ مثل کابل NYY و NYM و سیم افشان ساختمانی (H07V-U / NYA). <b>XLPE</b> یا <b>EPR</b> (حداکثر ۹۰°C) برای کابل‌های کراس‌لینک است؛ مثل N2XY یا کابل هوایی خودنگهدار که معمولاً «XLPE» یا «90°C» روی روکش آن‌ها نوشته شده است. اگر چیزی روی کابل خوانده نمی‌شود، همان PVC را انتخاب کنید؛ نتیجه محافظه‌کارانه‌تر خواهد بود.</p>
+            <p data-i18n="guideMet"><b>روش نصب:</b> این کدها بر اساس استاندارد IEC 60364-5-52 تعریف شده‌اند و فقط نحوه دفع حرارت کابل به محیط اطراف را توصیف می‌کنند. نزدیک‌ترین حالت به مسیر کابل خود را برگزینید:</p>
+            <div class="tbl-scroll">
+              <table>
+                <thead><tr>
+                  <th data-i18n="gColCode">کد</th>
+                  <th data-i18n="gColCond">وضعیت نصب</th>
+                  <th data-i18n="gColEx">مثال رایج</th>
+                </tr></thead>
+                <tbody>
+                  <tr><th>A1</th><td data-i18n="gA1d">سیم‌های تکی در لوله/داکت، داخل دیواری که عایق حرارتی دارد</td><td data-i18n="gA1e">افشان در لوله فلکسیبل، در دیوار یونولیت‌دار یا پشم‌سنگ</td></tr>
+                  <tr><th>A2</th><td data-i18n="gA2d">کابل چندرشته در لوله/داکت، داخل دیوار دارای عایق حرارتی</td><td data-i18n="gA2e">کابل NYY در لوله، در همان دیوار عایق‌شده</td></tr>
+                  <tr><th>B1</th><td data-i18n="gB1d">سیم‌های تکی در لوله/داکت روی دیوار، زیر سقف کاذب یا در دیوار آجری معمولی</td><td data-i18n="gB1e">افشان در لوله خرطومی روکار یا در دیوار آجری بدون عایق</td></tr>
+                  <tr><th>B2</th><td data-i18n="gB2d">کابل چندرشته در لوله/داکت روی دیوار</td><td data-i18n="gB2e">کابل NYY در داکت یا لوله روکار</td></tr>
+                  <tr><th>C</th><td data-i18n="gCd">کابل با بست مستقیم روی دیوار یا زیر سقف، بدون لوله؛ یا کابل آویخته روی سطح خاکِ بدون پوشش</td><td data-i18n="gCe">کابل بست‌خورده روی دیوار کارگاه، یا کابل کشیده‌شده روی زمین باز</td></tr>
+                  <tr><th>D1</th><td data-i18n="gD1d">کابل در لوله/داکت دفنی در خاک</td><td data-i18n="gD1e">فیدر دوربین یا موتورخانه در لوله خرطومی دفنی</td></tr>
+                  <tr><th>D2</th><td data-i18n="gD2d">کابل مستقیم دفن در خاک، بدون لوله</td><td data-i18n="gD2e">کابل زره‌دار (مسلح) دفن‌شده در بستر ماسه و آجرسپر</td></tr>
+                  <tr><th>E/F</th><td data-i18n="gEd">کابل در هوای آزاد یا روی سینی مشبک، دور از سطح دیوار</td><td data-i18n="gEe">کابل روی سینی مشبک در اتاق برق یا مسیر بیرون ساختمان</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p data-i18n="guideMetHint">هرچه مسیر محصورتر و عایق‌تر باشد، کابل دیرتر خنک می‌شود و ظرفیتش کمتر است. اگر وضعیت شما بین دو ردیف می‌گنجد، ردیف محدودکننده‌تر (دفع حرارت کندتر) را انتخاب کنید.</p>
+            <p data-i18n="guideSurf"><b>کابل روی سطح خاک:</b> کابلِ بدون پوشش روی زمین باز با روش C حساب می‌شود. اگر روی آن خاک یا ماسه ریخته می‌شود یا زیر توده خاک قرار می‌گیرد، روش D2 را انتخاب کنید.</p>
+            <p data-i18n="guideWater"><b>عبور از آب:</b> استاندارد روش مرجع جداگانه‌ای برای کابل غوطه‌ور در آب ندارد. آب گرمای کابل را بهتر از خاک می‌گیرد، پس انتخاب D1 (کابل در لوله دفنی) برآوردی امن و محافظه‌کارانه می‌دهد — اما خود کابل باید برای کار در آب (روکش ضدآب و مسلح) انتخاب و با دیتاشیت سازنده تأیید شود.</p>
+            <p data-i18n="guideSoil"><b>کابل دفنی:</b> ظرفیت‌ها برای عمق دفن ۰٫۷ متر و خاکی با مقاومت حرارتی ۲٫۵ K·m/W (خاک معمولی) تعریف شده است. در خاک بسیار خشک و شنی یا عمق بیشتر، ظرفیت واقعی کمتر است و بررسی دقیق‌تر لازم می‌شود.</p>
+            <p data-i18n="guideGrp"><b>تعداد مدارهای همراه (ضریب تجمع):</b> وقتی چند کابلِ باردار مسیر مشترکی دارند (یک لوله، داکت یا سینی)، گرمای یکدیگر را به هم اضافه می‌کنند. هر کابلِ تک‌فاز یا سه‌فاز «یک مدار» حساب می‌شود و خود مدار شما هم داخل شمارش است. فقط مدارهایی را بشمارید که هم‌زمان زیر بارند. مثال‌ها: یک کابل تنها در مسیر = ۱ · کابل شما به‌علاوه یک فیدر دیگر در همان داکت = ۲ · کابل فرعی روشناییِ رزرو که معمولاً خاموش است، یا رشته نول و سیم ارت، شمرده نمی‌شوند.</p>
+          </div>
+        </details>
       </fieldset>
 
       <fieldset>
@@ -399,9 +444,9 @@ footer .disclaimer{
           </div>
 
           <div class="field">
-            <label for="ambient" data-i18n="fAmbient">دمای محیط (°C)</label>
+            <label for="ambient" id="ambientLabel" data-i18n="fAmbient">دمای محیط (°C)</label>
             <input type="text" id="ambient" value="30" inputmode="decimal" autocomplete="off">
-            <span class="sub" data-i18n="fAmbientSub">دمای مرجع جداول ۳۰°C است</span>
+            <span class="sub" id="ambientSub" data-i18n="fAmbientSub">دمای مرجع جداول ۳۰°C است</span>
           </div>
 
           <div class="field">
@@ -486,7 +531,7 @@ footer .disclaimer{
       <div class="body">
         <p data-i18n="doc2p1">دمای محیط از دو مسیر مستقل بر انتخاب کابل اثر می‌گذارد و هر دو در این ابزار لحاظ شده‌اند:</p>
         <ul>
-          <li data-i18n="doc2l1"><b>کاهش ظرفیت جریان‌دهی:</b> جداول ظرفیت مجاز برای دمای مرجع ۳۰°C تدوین شده‌اند. با بالا رفتن دمای محیط، اختلاف دمای مجاز هادی کم می‌شود و ظرفیت کابل باید در ضریب تصحیح دما ضرب شود (جدول B.52.14 استاندارد IEC 60364-5-52).</li>
+          <li data-i18n="doc2l1"><b>کاهش ظرفیت جریان‌دهی:</b> جداول ظرفیت مجاز برای دمای مرجع ۳۰°C هوا و ۲۰°C خاک تدوین شده‌اند. با بالا رفتن دمای محیط، اختلاف دمای مجاز هادی کم می‌شود و ظرفیت کابل باید در ضریب تصحیح دما ضرب شود (جدول B.52.14 استاندارد IEC 60364-5-52 برای نصب در هوا و جدول B.52.15 برای کابل دفنی).</li>
           <li data-i18n="doc2l2"><b>افزایش مقاومت هادی:</b> مقاومت فلز با دما زیاد می‌شود و در نتیجه افت ولتاژ بالا می‌رود. مقاومت ویژه در دمای کار واقعی هادی محاسبه می‌شود، نه در ۲۰°C.</li>
         </ul>
         <code class="formula">ρ(θ) = ρ₂₀ × [1 + α × (θ − 20)]</code>
@@ -511,7 +556,7 @@ footer .disclaimer{
       <div class="body">
         <p data-i18n="doc3p">ظرفیت پایه کابل از جداول IEC 60364-5-52 بر اساس جنس هادی، نوع عایق، روش نصب و تعداد هادی‌های باردار خوانده می‌شود، سپس در ضرایب تصحیح ضرب می‌گردد:</p>
         <code class="formula">I_z = I_table × k_temp × k_group   ⟹   I_z ≥ I_b</code>
-        <p data-i18n="doc3p2">ضریب تجمع برای کابل‌های مجاور مطابق جدول B.52.17 اعمال می‌شود (۲ مدار: ۰٫۸۰ · ۳ مدار: ۰٫۷۰ · ۴ مدار: ۰٫۶۵ و …).</p>
+        <p data-i18n="doc3p2">ضریب تجمع برای کابل‌های همراه اعمال می‌شود: مسیرهای هوایی مطابق جدول B.52.17 (۲ مدار: ۰٫۸۰ · ۳ مدار: ۰٫۷۰ · ۴ مدار: ۰٫۶۵ و …) و کابل‌های دفنی مطابق ستون کابل‌های چسبیده جداول B.52.18/19 (۲ مدار: ۰٫۷۵ · ۳ مدار: ۰٫۶۵ · ۴ مدار: ۰٫۶۰ و …).</p>
       </div>
     </details>
 
@@ -529,10 +574,11 @@ footer .disclaimer{
       <summary data-i18n="doc5t">۵. فرض‌ها و محدودیت‌ها</summary>
       <div class="body">
         <ul>
-          <li data-i18n="doc5l1">ظرفیت‌های مبنا برای هادی مسی و نصب در هوا است؛ برای آلومینیوم ضریب تقریبی ۰٫۷۸ اعمال می‌شود.</li>
-          <li data-i18n="doc5l2">اثر هارمونیک‌ها، جریان راه‌اندازی موتور و کابل‌های دفنی در خاک در محاسبه وارد نشده است.</li>
+          <li data-i18n="doc5l1">ظرفیت‌های مبنا برای هادی مسی جدول‌بندی شده‌اند؛ برای آلومینیوم ضریب تقریبی ۰٫۷۸ اعمال می‌شود.</li>
+          <li data-i18n="doc5l2">اثر هارمونیک‌ها، جریان راه‌اندازی موتور و کابل‌های غوطه‌ور در آب مدل نشده است؛ برای عبور از آب توضیحات راهنمای انتخاب را ببینید.</li>
           <li data-i18n="doc5l3">هماهنگی با وسیله حفاظتی (شرط I_b ≤ I_n ≤ I_z) و بررسی تحمل اتصال کوتاه جداگانه لازم است.</li>
           <li data-i18n="doc5l4">سری مقاطع استاندارد: ۱٫۵ تا ۳۰۰ میلی‌متر مربع. برای بارهای بزرگ‌تر از کابل‌های موازی استفاده کنید.</li>
+          <li data-i18n="doc5l5">ظرفیت‌های دفنی (D1/D2) برای دمای خاک ۲۰°C، عمق دفن ۰٫۷ متر و خاک با مقاومت حرارتی ۲٫۵ K·m/W تعریف شده‌اند؛ در خاک بسیار خشک یا عمق بیشتر، بررسی تفصیلی لازم است.</li>
         </ul>
       </div>
     </details>
@@ -547,7 +593,7 @@ footer .disclaimer{
     <div style="margin-top:6px">
       <a href="https://github.com/m0000hamad/CableSizer" target="_blank" rel="noopener">GitHub</a>
       <span class="sep">·</span>
-      <a href="https://github.com/m0000hamad/CableSizer/blob/main/CHANGELOG.md" target="_blank" rel="noopener" id="ftVersion">v1.1.0</a>
+      <a href="https://github.com/m0000hamad/CableSizer/blob/main/CHANGELOG.md" target="_blank" rel="noopener" id="ftVersion">v1.3.0</a>
       <span class="sep">·</span>
       <span data-i18n="ftLicense">انتشار تحت مجوز MIT</span>
     </div>
@@ -607,14 +653,50 @@ const AMPACITY = {
 /** Aluminium ampacity relative to copper — engineering approximation. */
 const AL_FACTOR = 0.78;
 
+/**
+ * Base current-carrying capacity (A) for copper conductors buried in the ground,
+ * keyed as [D1, D2]. Reference: ground 20 °C, soil thermal resistivity 2.5 K·m/W,
+ * laying depth 0.7 m — IEC 60364-5-52 Tables B.52.2, B.52.3, B.52.4 and B.52.5.
+ */
+const AMPACITY_BURIED = {
+  pvc: {
+    2: {1.5:[22,22], 2.5:[29,28], 4:[37,38], 6:[46,48], 10:[60,64], 16:[78,83],
+        25:[99,110], 35:[119,132], 50:[140,156], 70:[173,192], 95:[204,230], 120:[231,261],
+        150:[261,293], 185:[292,331], 240:[336,382], 300:[379,427]},
+    3: {1.5:[18,19], 2.5:[24,24], 4:[30,33], 6:[38,41], 10:[50,54], 16:[64,70],
+        25:[82,92], 35:[98,110], 50:[116,130], 70:[143,162], 95:[169,193], 120:[192,220],
+        150:[217,246], 185:[243,278], 240:[280,320], 300:[316,359]}
+  },
+  xlpe: {
+    2: {1.5:[25,27], 2.5:[33,35], 4:[43,46], 6:[53,58], 10:[71,77], 16:[91,100],
+        25:[116,129], 35:[139,155], 50:[164,183], 70:[203,225], 95:[239,270], 120:[271,306],
+        150:[306,343], 185:[343,387], 240:[395,448], 300:[446,502]},
+    3: {1.5:[21,23], 2.5:[28,30], 4:[36,39], 6:[44,49], 10:[58,65], 16:[75,84],
+        25:[96,107], 35:[115,129], 50:[135,153], 70:[167,188], 95:[197,226], 120:[223,257],
+        150:[251,287], 185:[281,324], 240:[324,375], 300:[365,419]}
+  }
+};
+
 /** Ambient temperature correction factors (Table B.52.14), reference 30 °C. */
 const TEMP_FACTORS = {
   pvc:  [[10,1.22],[15,1.17],[20,1.12],[25,1.06],[30,1.00],[35,0.94],[40,0.87],[45,0.79],[50,0.71],[55,0.61],[60,0.50]],
   xlpe: [[10,1.15],[15,1.12],[20,1.08],[25,1.04],[30,1.00],[35,0.96],[40,0.91],[45,0.87],[50,0.82],[55,0.76],[60,0.71],[65,0.65],[70,0.58],[75,0.50],[80,0.41]]
 };
 
+/** Ground temperature correction factors (Table B.52.15), reference 20 °C. */
+const TEMP_FACTORS_SOIL = {
+  pvc:  [[10,1.10],[15,1.05],[20,1.00],[25,0.95],[30,0.89],[35,0.84],[40,0.77],[45,0.71],[50,0.63],[55,0.55],[60,0.45]],
+  xlpe: [[10,1.07],[15,1.04],[20,1.00],[25,0.96],[30,0.93],[35,0.89],[40,0.85],[45,0.80],[50,0.76],[55,0.71],[60,0.65],[65,0.60],[70,0.53],[75,0.46],[80,0.38]]
+};
+
 /** Grouping factors for circuits bunched in one run (Table B.52.17). */
 const GROUP_FACTORS = {1:1.00, 2:0.80, 3:0.70, 4:0.65, 5:0.60, 6:0.57, 7:0.54, 8:0.52, 9:0.50, 12:0.45, 16:0.41, 20:0.38};
+
+/** Grouping factors for buried circuits, cables touching (Tables B.52.18 and B.52.19). */
+const GROUP_FACTORS_BURIED = {1:1.00, 2:0.75, 3:0.65, 4:0.60, 5:0.55, 6:0.50, 7:0.45, 8:0.43, 9:0.41, 12:0.36, 16:0.32, 20:0.29};
+
+/** Method index at which buried methods (D1, D2) start in the methods list. */
+const BURIED_FROM = 6;
 
 /** Conductor properties: resistivity at 20 °C (Ω·mm²/m) and temperature coefficient (1/K). */
 const CONDUCTOR = {
@@ -644,10 +726,18 @@ function interpolate(table, x) {
   return last[1];
 }
 
+/** True when the selected installation method is buried in ground (D1 or D2). */
+function isBuried(method) {
+  return method >= BURIED_FROM;
+}
+
 /** Base ampacity of one cross-section for the given cable configuration. */
 function baseAmpacity(size, cfg) {
-  const row = AMPACITY[cfg.insulation][cfg.loadedConductors][size];
-  const value = row[cfg.method];
+  const buried = isBuried(cfg.method);
+  const row = buried
+    ? AMPACITY_BURIED[cfg.insulation][cfg.loadedConductors][size]
+    : AMPACITY[cfg.insulation][cfg.loadedConductors][size];
+  const value = buried ? row[cfg.method - BURIED_FROM] : row[cfg.method];
   return cfg.material === "aluminum" ? value * AL_FACTOR : value;
 }
 
@@ -664,8 +754,10 @@ function sizeCable(cfg) {
     return {error: "ambientTooHigh", maxTemp};
   }
 
-  const kTemp  = interpolate(TEMP_FACTORS[cfg.insulation], cfg.ambient);
-  const kGroup = GROUP_FACTORS[cfg.circuits] ?? 1;
+  const kTemp  = interpolate(
+    (isBuried(cfg.method) ? TEMP_FACTORS_SOIL : TEMP_FACTORS)[cfg.insulation],
+    cfg.ambient);
+  const kGroup = (isBuried(cfg.method) ? GROUP_FACTORS_BURIED : GROUP_FACTORS)[cfg.circuits] ?? 1;
   const cond   = CONDUCTOR[cfg.material];
 
   const sinPhi = Math.sqrt(Math.max(0, 1 - cfg.pf * cfg.pf));
@@ -727,16 +819,47 @@ const I18N = {
     fMaterial: "جنس هادی", optCopper: "مس", optAluminum: "آلومینیوم",
     fInsulation: "نوع عایق", optPvc: "PVC — حداکثر ۷۰°C", optXlpe: "XLPE / EPR — حداکثر ۹۰°C",
     fMethod: "روش نصب",
-    optM_A1: "A1 — داخل لوله در دیوار عایق‌کاری‌شده",
-    optM_A2: "A2 — کابل داخل لوله در دیوار عایق‌کاری‌شده",
-    optM_B1: "B1 — داخل لوله روی دیوار",
-    optM_B2: "B2 — کابل داخل لوله روی دیوار",
-    optM_C:  "C — نصب مستقیم روی دیوار یا سینی",
-    optM_E:  "E/F — در هوای آزاد یا سینی مشبک",
-    fCircuits: "تعداد مدارهای مجاور", fCircuitsSub: "کابل‌های کنار هم در یک مسیر — ضریب تجمع",
+    optM_A1: "A1 — سیم‌های تکی در لوله، در دیوار دارای عایق حرارتی",
+    optM_A2: "A2 — کابل چندرشته در لوله، در دیوار دارای عایق حرارتی",
+    optM_B1: "B1 — سیم‌های تکی در لوله/داکت روی دیوار یا زیر سقف",
+    optM_B2: "B2 — کابل چندرشته در لوله/داکت روی دیوار",
+    optM_C:  "C — کابل بست‌خورده روی دیوار یا زیر سقف",
+    optM_D1: "D1 — کابل در لوله/داکت دفنی در خاک",
+    optM_D2: "D2 — کابل مستقیم دفن در خاک",
+    optM_E:  "E/F — کابل در هوای آزاد یا روی سینی مشبک",
+    fInsulationSub: "نوع عایق روی روکش کابل چاپ می‌شود؛ اگر مطمئن نیستید PVC بگیرید",
+    fMethodSub: "کد بر اساس نحوه دفع حرارت مسیر کابل تعیین می‌شود — راهنمای پایین را ببینید",
+    guideT: "کدام را انتخاب کنم؟ راهنمای نوع کابل و روش نصب",
+    guideMat: "<b>جنس هادی:</b> بیشتر مدارهای ساختمانی مسی‌اند. آلومینیوم عمدتاً در فیدرهای قدرت پرجریان یا کابل‌های هوایی به‌کار می‌رود و برای همان بار به مقطع بزرگ‌تری نیاز دارد.",
+    guideIns: "<b>نوع عایق:</b> از روی چاپِ روکش کابل خوانده می‌شود. <b>PVC</b> (حداکثر ۷۰°C) عایقِ بیشتر کابل‌های ساختمانی و شبکه‌ای است؛ مثل کابل NYY و NYM و سیم افشان ساختمانی (H07V-U / NYA). <b>XLPE</b> یا <b>EPR</b> (حداکثر ۹۰°C) برای کابل‌های کراس‌لینک است؛ مثل N2XY یا کابل هوایی خودنگهدار که معمولاً «XLPE» یا «90°C» روی روکش آن‌ها نوشته شده است. اگر چیزی روی کابل خوانده نمی‌شود، همان PVC را انتخاب کنید؛ نتیجه محافظه‌کارانه‌تر خواهد بود.",
+    guideMet: "<b>روش نصب:</b> این کدها بر اساس استاندارد IEC 60364-5-52 تعریف شده‌اند و فقط نحوه دفع حرارت کابل به محیط اطراف را توصیف می‌کنند. نزدیک‌ترین حالت به مسیر کابل خود را برگزینید:",
+    gColCode: "کد", gColCond: "وضعیت نصب", gColEx: "مثال رایج",
+    gA1d: "سیم‌های تکی در لوله/داکت، داخل دیواری که عایق حرارتی دارد",
+    gA1e: "افشان در لوله فلکسیبل، در دیوار یونولیت‌دار یا پشم‌سنگ",
+    gA2d: "کابل چندرشته در لوله/داکت، داخل دیوار دارای عایق حرارتی",
+    gA2e: "کابل NYY در لوله، در همان دیوار عایق‌شده",
+    gB1d: "سیم‌های تکی در لوله/داکت روی دیوار، زیر سقف کاذب یا در دیوار آجری معمولی",
+    gB1e: "افشان در لوله خرطومی روکار یا در دیوار آجری بدون عایق",
+    gB2d: "کابل چندرشته در لوله/داکت روی دیوار",
+    gB2e: "کابل NYY در داکت یا لوله روکار",
+    gCd: "کابل با بست مستقیم روی دیوار یا زیر سقف، بدون لوله؛ یا کابل آویخته روی سطح خاکِ بدون پوشش",
+    gCe: "کابل بست‌خورده روی دیوار کارگاه، یا کابل کشیده‌شده روی زمین باز",
+    gD1d: "کابل در لوله/داکت دفنی در خاک",
+    gD1e: "فیدر دوربین یا موتورخانه در لوله خرطومی دفنی",
+    gD2d: "کابل مستقیم دفن در خاک، بدون لوله",
+    gD2e: "کابل زره‌دار (مسلح) دفن‌شده در بستر ماسه و آجرسپر",
+    gEd: "کابل در هوای آزاد یا روی سینی مشبک، دور از سطح دیوار",
+    gEe: "کابل روی سینی مشبک در اتاق برق یا مسیر بیرون ساختمان",
+    guideMetHint: "هرچه مسیر محصورتر و عایق‌تر باشد، کابل دیرتر خنک می‌شود و ظرفیتش کمتر است. اگر وضعیت شما بین دو ردیف می‌گنجد، ردیف محدودکننده‌تر (دفع حرارت کندتر) را انتخاب کنید.",
+    guideSurf: "<b>کابل روی سطح خاک:</b> کابلِ بدون پوشش روی زمین باز با روش C حساب می‌شود. اگر روی آن خاک یا ماسه ریخته می‌شود یا زیر توده خاک قرار می‌گیرد، روش D2 را انتخاب کنید.",
+    guideWater: "<b>عبور از آب:</b> استاندارد روش مرجع جداگانه‌ای برای کابل غوطه‌ور در آب ندارد. آب گرمای کابل را بهتر از خاک می‌گیرد، پس انتخاب D1 (کابل در لوله دفنی) برآوردی امن و محافظه‌کارانه می‌دهد — اما خود کابل باید برای کار در آب (روکش ضدآب و مسلح) انتخاب و با دیتاشیت سازنده تأیید شود.",
+    guideSoil: "<b>کابل دفنی:</b> ظرفیت‌ها برای عمق دفن ۰٫۷ متر و خاکی با مقاومت حرارتی ۲٫۵ K·m/W (خاک معمولی) تعریف شده است. در خاک بسیار خشک و شنی یا عمق بیشتر، ظرفیت واقعی کمتر است و بررسی دقیق‌تر لازم می‌شود.",
+    guideGrp: "<b>تعداد مدارهای همراه (ضریب تجمع):</b> وقتی چند کابلِ باردار مسیر مشترکی دارند (یک لوله، داکت یا سینی)، گرمای یکدیگر را به هم اضافه می‌کنند. هر کابلِ تک‌فاز یا سه‌فاز «یک مدار» حساب می‌شود و خود مدار شما هم داخل شمارش است. فقط مدارهایی را بشمارید که هم‌زمان زیر بارند. مثال‌ها: یک کابل تنها در مسیر = ۱ · کابل شما به‌علاوه یک فیدر دیگر در همان داکت = ۲ · کابل فرعی روشناییِ رزرو که معمولاً خاموش است، یا رشته نول و سیم ارت، شمرده نمی‌شوند.",
+    fCircuits: "تعداد مدارهای همراه در یک مسیر", fCircuitsSub: "با احتساب خود مدار شما؛ فقط مدارهای هم‌زمانِ زیر بار شمرده می‌شوند — مثال‌ها در راهنمای انتخاب",
     secCond: "شرایط محیط و مسیر",
     fLength: "طول مسیر کابل (m)", fLengthSub: "فاصله یک‌طرفه از تابلو تا مصرف‌کننده",
     fAmbient: "دمای محیط (°C)", fAmbientSub: "دمای مرجع جداول ۳۰°C است",
+    fAmbientSoil: "دمای خاک (°C)", fAmbientSoilSub: "مرجع ۲۰°C در عمق دفن متعارف ۰٫۷ متر — با انتخاب روش D1/D2 این فیلد به دمای خاک تغییر می‌کند",
     fMaxDrop: "حداکثر افت ولتاژ مجاز (%)",
     optDrop3: "۳٪ — مدار روشنایی", optDrop5: "۵٪ — مدار قدرت و موتوری", optDrop8: "۸٪ — مسیرهای طولانی",
     btnCalc: "محاسبه سطح مقطع",
@@ -750,6 +873,7 @@ const I18N = {
     capAmp: "تعیین‌کننده: ظرفیت جریان‌دهی",
     noteOk: "هر دو شرط جریان‌دهی و افت ولتاژ برآورده شده است.",
     noteDerate: (k, t) => `به دلیل دمای محیط ${t}°C، ظرفیت کابل در ضریب ${k} ضرب شده است.`,
+    noteDerateSoil: (k, t) => `به دلیل دمای خاک ${t}°C، ظرفیت کابل در ضریب ${k} ضرب شده است.`,
     noteUpsize: (a, d) => `شرط افت ولتاژ مقطع را از ${a} به ${d} میلی‌متر مربع افزایش داد.`,
     noteGroup: (k, n) => `به دلیل ${n} مدار مجاور، ضریب تجمع ${k} اعمال شد.`,
     noteHighUtil: "بارگذاری کابل بالای ۹۰٪ ظرفیت مجاز است؛ یک مقطع بزرگ‌تر توصیه می‌شود.",
@@ -763,21 +887,22 @@ const I18N = {
     doc1p: "جریان طراحی مدار از توان و ضریب توان به دست می‌آید:",
     doc2t: "۲. تأثیر دمای محیط",
     doc2p1: "دمای محیط از دو مسیر مستقل بر انتخاب کابل اثر می‌گذارد و هر دو در این ابزار لحاظ شده‌اند:",
-    doc2l1: "<b>کاهش ظرفیت جریان‌دهی:</b> جداول ظرفیت مجاز برای دمای مرجع ۳۰°C تدوین شده‌اند. با بالا رفتن دمای محیط، اختلاف دمای مجاز هادی کم می‌شود و ظرفیت کابل باید در ضریب تصحیح دما ضرب شود (جدول B.52.14 استاندارد IEC 60364-5-52).",
+    doc2l1: "<b>کاهش ظرفیت جریان‌دهی:</b> جداول ظرفیت مجاز برای دمای مرجع ۳۰°C هوا و ۲۰°C خاک تدوین شده‌اند. با بالا رفتن دمای محیط، اختلاف دمای مجاز هادی کم می‌شود و ظرفیت کابل باید در ضریب تصحیح دما ضرب شود (جدول B.52.14 استاندارد IEC 60364-5-52 برای نصب در هوا و جدول B.52.15 برای کابل دفنی).",
     doc2l2: "<b>افزایش مقاومت هادی:</b> مقاومت فلز با دما زیاد می‌شود و در نتیجه افت ولتاژ بالا می‌رود. مقاومت ویژه در دمای کار واقعی هادی محاسبه می‌شود، نه در ۲۰°C.",
     doc2p2: "ضریب دمایی α برابر ۰٫۰۰۳۹۳ برای مس و ۰٫۰۰۴۰۳ برای آلومینیوم در نظر گرفته شده است.",
     tblAmb: "دمای محیط (°C)", tblPvc: "ضریب PVC (۷۰°C)", tblXlpe: "ضریب XLPE (۹۰°C)",
     doc3t: "۳. شرط ظرفیت جریان‌دهی",
     doc3p: "ظرفیت پایه کابل از جداول IEC 60364-5-52 بر اساس جنس هادی، نوع عایق، روش نصب و تعداد هادی‌های باردار خوانده می‌شود، سپس در ضرایب تصحیح ضرب می‌گردد:",
-    doc3p2: "ضریب تجمع برای کابل‌های مجاور مطابق جدول B.52.17 اعمال می‌شود (۲ مدار: ۰٫۸۰ · ۳ مدار: ۰٫۷۰ · ۴ مدار: ۰٫۶۵ و …).",
+    doc3p2: "ضریب تجمع برای کابل‌های همراه اعمال می‌شود: مسیرهای هوایی مطابق جدول B.52.17 (۲ مدار: ۰٫۸۰ · ۳ مدار: ۰٫۷۰ · ۴ مدار: ۰٫۶۵ و …) و کابل‌های دفنی مطابق ستون کابل‌های چسبیده جداول B.52.18/19 (۲ مدار: ۰٫۷۵ · ۳ مدار: ۰٫۶۵ · ۴ مدار: ۰٫۶۰ و …).",
     doc4t: "۴. شرط افت ولتاژ",
     doc4p: "افت ولتاژ با در نظر گرفتن مقاومت و راکتانس مسیر محاسبه می‌شود:",
     doc4p2: "که در آن R' = ρ(θ)/A مقاومت هر متر هادی و X' راکتانس هر متر است (مقدار نوعی ۰٫۰۸ اهم بر کیلومتر برای کابل‌های چندرشته‌ای فشار ضعیف).",
     doc5t: "۵. فرض‌ها و محدودیت‌ها",
-    doc5l1: "ظرفیت‌های مبنا برای هادی مسی و نصب در هوا است؛ برای آلومینیوم ضریب تقریبی ۰٫۷۸ اعمال می‌شود.",
-    doc5l2: "اثر هارمونیک‌ها، جریان راه‌اندازی موتور و کابل‌های دفنی در خاک در محاسبه وارد نشده است.",
+    doc5l1: "ظرفیت‌های مبنا برای هادی مسی جدول‌بندی شده‌اند؛ برای آلومینیوم ضریب تقریبی ۰٫۷۸ اعمال می‌شود.",
+    doc5l2: "اثر هارمونیک‌ها، جریان راه‌اندازی موتور و کابل‌های غوطه‌ور در آب مدل نشده است؛ برای عبور از آب توضیحات راهنمای انتخاب را ببینید.",
     doc5l3: "هماهنگی با وسیله حفاظتی (شرط I_b ≤ I_n ≤ I_z) و بررسی تحمل اتصال کوتاه جداگانه لازم است.",
     doc5l4: "سری مقاطع استاندارد: ۱٫۵ تا ۳۰۰ میلی‌متر مربع. برای بارهای بزرگ‌تر از کابل‌های موازی استفاده کنید.",
+    doc5l5: "ظرفیت‌های دفنی (D1/D2) برای دمای خاک ۲۰°C، عمق دفن ۰٫۷ متر و خاک با مقاومت حرارتی ۲٫۵ K·m/W تعریف شده‌اند؛ در خاک بسیار خشک یا عمق بیشتر، بررسی تفصیلی لازم است.",
     ftBy: "طراحی و توسعه:", ftName: "— محمد نریموسایی", ftLicense: "انتشار تحت مجوز MIT",
     ftDisclaimer: "این ابزار برای برآورد مهندسی و مطالعات اولیه تهیه شده است. نتایج آن جایگزین محاسبات تفصیلی، مقررات ملی ساختمان و تأیید مهندس ناظر برق نیست."
   },
@@ -795,16 +920,47 @@ const I18N = {
     fMaterial: "Conductor material", optCopper: "Copper", optAluminum: "Aluminium",
     fInsulation: "Insulation type", optPvc: "PVC — 70 °C max", optXlpe: "XLPE / EPR — 90 °C max",
     fMethod: "Installation method",
-    optM_A1: "A1 — in conduit in a thermally insulated wall",
-    optM_A2: "A2 — cable in conduit in a thermally insulated wall",
-    optM_B1: "B1 — in conduit on a wall",
-    optM_B2: "B2 — cable in conduit on a wall",
-    optM_C:  "C — clipped direct to a wall or tray",
-    optM_E:  "E/F — in free air or on a perforated tray",
-    fCircuits: "Adjacent circuits", fCircuitsSub: "Cables bunched in one run — grouping factor",
+    optM_A1: "A1 — single wires in conduit, in an insulated wall",
+    optM_A2: "A2 — multicore cable in conduit, in an insulated wall",
+    optM_B1: "B1 — single wires in conduit/trunking on a wall",
+    optM_B2: "B2 — multicore cable in conduit/trunking on a wall",
+    optM_C:  "C — cable clipped direct on a wall or ceiling",
+    optM_D1: "D1 — cable in a buried conduit/duct",
+    optM_D2: "D2 — cable buried direct in the ground",
+    optM_E:  "E/F — cable in free air or on a perforated tray",
+    fInsulationSub: "Read it off the cable sheath — when in doubt, pick PVC.",
+    fMethodSub: "The code reflects how the run releases heat — see the guide below.",
+    guideT: "Which one do I pick? Cable type & installation method guide",
+    guideMat: "<b>Conductor material:</b> most building circuits are copper. Aluminium is mostly used in high-current power feeders or aerial lines, and needs a larger cross-section for the same load.",
+    guideIns: "<b>Insulation type:</b> printed on the cable sheath. <b>PVC</b> (70 °C max) covers most building and distribution cables — e.g. NYY, NYM and H07V-U building wire. <b>XLPE</b> or <b>EPR</b> (90 °C max) is found in cross-linked cables such as N2XY or aerial bundled cable, usually marked «XLPE» or «90 °C». If nothing is legible, choose PVC — the result stays on the safe side.",
+    guideMet: "<b>Installation method:</b> these codes come from IEC 60364-5-52 and describe only how the cable releases heat to its surroundings. Pick the row closest to your run:",
+    gColCode: "Code", gColCond: "Installation condition", gColEx: "Everyday example",
+    gA1d: "Single wires in conduit/trunking, inside a thermally insulated wall",
+    gA1e: "Building wire in flex conduit, in a wall packed with foam or mineral wool",
+    gA2d: "Multicore cable in conduit/trunking, inside a thermally insulated wall",
+    gA2e: "An NYY cable in conduit, in such an insulated wall",
+    gB1d: "Single wires in conduit/trunking on a wall, above a false ceiling, or in an ordinary masonry wall",
+    gB1e: "Building wire in surface conduit, or in a brick wall without thermal insulation",
+    gB2d: "Multicore cable in conduit/trunking on a wall",
+    gB2e: "An NYY cable in surface trunking or conduit",
+    gCd: "Cable fixed direct on a wall or under a ceiling, no conduit; or lying on uncovered open ground",
+    gCe: "Cable cleated to a workshop wall, or a cable laid on bare ground",
+    gD1d: "Cable in a conduit/duct buried in the ground",
+    gD1e: "A camera or pump-house feeder in a buried flex conduit",
+    gD2d: "Cable buried direct in the ground, no conduit",
+    gD2e: "Armoured (SWA) cable in a sand bed with cover tiles",
+    gEd: "Cable in free air or on a perforated tray, clear of surfaces",
+    gEe: "Cable on perforated tray in an electrical room, or an outdoor span",
+    guideMetHint: "The more enclosed the route, the slower the cable cools and the lower its capacity. If your situation falls between two rows, choose the more restrictive one (slower heat dissipation).",
+    guideSurf: "<b>Cable on ground surface:</b> an uncovered cable laid on open ground is treated as method C. If it will be covered with soil or sand, or ends up under a mound of earth, select method D2.",
+    guideWater: "<b>Crossing water:</b> the standard defines no dedicated reference method for cables submerged in water. Water draws heat away from the cable better than soil does, so selecting D1 (cable in buried duct) yields a safe, conservative estimate — but the cable itself must be suitable for immersion (watertight, protected sheath) and verified against the manufacturer's datasheet.",
+    guideSoil: "<b>Buried cables:</b> the buried ratings assume a 0.7 m laying depth and soil with a thermal resistivity of 2.5 K·m/W (ordinary soil). In very dry sandy soil or at greater depth the true capacity is lower and a more detailed study is needed.",
+    guideGrp: "<b>Circuits sharing one route (grouping factor):</b> when several loaded cables share a route (one conduit, trunking or tray), each adds its heat to the others. Every single-phase or three-phase cable counts as «one circuit», and your own circuit is part of the count. Only count circuits that are loaded at the same time. Examples: a single cable on its own route = 1 · your cable plus one other feeder in the same trunking = 2 · a standby lighting branch that is normally off, or the neutral and earth wires, are not counted.",
+    fCircuits: "Circuits sharing one route", fCircuitsSub: "Including this circuit; only circuits loaded at the same time are counted — examples in the guide",
     secCond: "Route and environment",
     fLength: "Cable route length (m)", fLengthSub: "One-way distance from the board to the load",
     fAmbient: "Ambient temperature (°C)", fAmbientSub: "Tabulated capacities assume 30 °C",
+    fAmbientSoil: "Ground temperature (°C)", fAmbientSoilSub: "Reference 20 °C at a typical 0.7 m laying depth — this field switches to ground temperature when D1/D2 is selected",
     fMaxDrop: "Maximum permitted voltage drop (%)",
     optDrop3: "3% — lighting circuits", optDrop5: "5% — power and motor circuits", optDrop8: "8% — long runs",
     btnCalc: "Calculate cable size",
@@ -818,6 +974,7 @@ const I18N = {
     capAmp: "Governed by: current-carrying capacity",
     noteOk: "Both the ampacity and the voltage-drop requirements are satisfied.",
     noteDerate: (k, t) => `At ${t} °C ambient the cable capacity is multiplied by a factor of ${k}.`,
+    noteDerateSoil: (k, t) => `At ${t} °C ground temperature the cable capacity is multiplied by a factor of ${k}.`,
     noteUpsize: (a, d) => `The voltage-drop limit raised the size from ${a} to ${d} mm².`,
     noteGroup: (k, n) => `With ${n} adjacent circuits a grouping factor of ${k} was applied.`,
     noteHighUtil: "The cable runs above 90% of its derated capacity — consider the next size up.",
@@ -831,21 +988,22 @@ const I18N = {
     doc1p: "The design current is derived from load power and power factor:",
     doc2t: "2. Effect of ambient temperature",
     doc2p1: "Ambient temperature affects cable selection along two independent paths, both accounted for here:",
-    doc2l1: "<b>Reduced current-carrying capacity:</b> tabulated capacities assume a 30 °C reference ambient. As ambient temperature rises, the permitted conductor temperature rise shrinks, so capacity is multiplied by a temperature correction factor (IEC 60364-5-52, Table B.52.14).",
+    doc2l1: "<b>Reduced current-carrying capacity:</b> tabulated capacities assume reference ambients of 30 °C in air and 20 °C in ground. As ambient temperature rises, the permitted conductor temperature rise shrinks, so capacity is multiplied by a temperature correction factor (IEC 60364-5-52, Table B.52.14 for installations in air, Table B.52.15 for buried cables).",
     doc2l2: "<b>Increased conductor resistance:</b> metal resistance rises with temperature, which increases voltage drop. Resistivity is evaluated at the actual conductor operating temperature, not at 20 °C.",
     doc2p2: "The temperature coefficient α is taken as 0.00393 for copper and 0.00403 for aluminium.",
     tblAmb: "Ambient (°C)", tblPvc: "PVC factor (70 °C)", tblXlpe: "XLPE factor (90 °C)",
     doc3t: "3. Current-carrying capacity check",
     doc3p: "The base capacity is read from the IEC 60364-5-52 tables for the conductor material, insulation, installation method and number of loaded conductors, then multiplied by the correction factors:",
-    doc3p2: "Grouping factors for bunched cables follow Table B.52.17 (2 circuits: 0.80 · 3 circuits: 0.70 · 4 circuits: 0.65, and so on).",
+    doc3p2: "A grouping factor is applied for cables sharing a route: aerial routes follow Table B.52.17 (2 circuits: 0.80 · 3 circuits: 0.70 · 4 circuits: 0.65, and so on) and buried circuits the touching column of Tables B.52.18/19 (2 circuits: 0.75 · 3 circuits: 0.65 · 4 circuits: 0.60, and so on).",
     doc4t: "4. Voltage drop check",
     doc4p: "Voltage drop is computed from both the resistance and the reactance of the route:",
     doc4p2: "Here R' = ρ(θ)/A is the resistance per metre of conductor and X' the reactance per metre (a typical 0.08 Ω/km for LV multicore cables).",
     doc5t: "5. Assumptions and limitations",
-    doc5l1: "Base capacities are for copper conductors installed in air; aluminium uses an approximate 0.78 factor.",
-    doc5l2: "Harmonics, motor starting current and cables buried directly in soil are not modelled.",
+    doc5l1: "Base capacities are tabulated for copper conductors; aluminium uses an approximate 0.78 factor.",
+    doc5l2: "Harmonics, motor starting current and cables submerged in water are not modelled — see the selection guide for water crossings.",
     doc5l3: "Coordination with the protective device (Ib ≤ In ≤ Iz) and short-circuit withstand must be verified separately.",
     doc5l4: "Standard size range: 1.5 to 300 mm². Use parallel cables for larger loads.",
+    doc5l5: "Buried ratings (D1/D2) are defined for a 20 °C ground temperature, 0.7 m laying depth and soil with 2.5 K·m/W thermal resistivity; very dry soil or greater depth needs a detailed study.",
     ftBy: "Designed and developed by", ftName: "— Mohammad Narimousaei", ftLicense: "Released under the MIT License",
     ftDisclaimer: "This tool is intended for engineering estimation and preliminary studies. Its results do not replace detailed design calculations, national wiring regulations, or sign-off by a qualified electrical engineer."
   }
@@ -873,7 +1031,16 @@ function applyLanguage(next) {
   document.getElementById("ftVersion").title = rtl ? "تاریخچه نسخه‌ها" : "Version history";
   try { localStorage.setItem("cablesizer.lang", lang); } catch (_) {}
 
+  syncAmbientUI();
   if (lastResult) render(lastResult);
+}
+
+/** Labels the ambient field as air or ground temperature, per the chosen method. */
+function syncAmbientUI() {
+  const dict = I18N[lang];
+  const buried = isBuried(parseInt(document.getElementById("method").value, 10));
+  document.getElementById("ambientLabel").textContent = buried ? dict.fAmbientSoil : dict.fAmbient;
+  document.getElementById("ambientSub").textContent   = buried ? dict.fAmbientSoilSub : dict.fAmbientSub;
 }
 
 /* =========================================================================
@@ -992,7 +1159,8 @@ function render(data) {
 
   const notes = [note("ok", dict.noteOk)];
   if (Math.abs(result.kTemp - 1) > 0.005) {
-    notes.push(note("info", dict.noteDerate(result.kTemp.toFixed(2), cfg.ambient)));
+    const derateNote = isBuried(cfg.method) ? dict.noteDerateSoil : dict.noteDerate;
+    notes.push(note("info", derateNote(result.kTemp.toFixed(2), cfg.ambient)));
   }
   if (result.kGroup < 1) {
     notes.push(note("info", dict.noteGroup(result.kGroup.toFixed(2), cfg.circuits)));
@@ -1055,6 +1223,18 @@ function calculate() {
 }
 
 $("calcForm").addEventListener("submit", (event) => { event.preventDefault(); calculate(); });
+
+// When the route type changes between air and buried, relabel the ambient field
+// and reseed it with the matching reference temperature (30 °C air / 20 °C ground).
+let lastBuriedMode = isBuried(parseInt($("method").value, 10));
+$("method").addEventListener("change", () => {
+  const buried = isBuried(parseInt($("method").value, 10));
+  if (buried !== lastBuriedMode) {
+    $("ambient").value = buried ? "20" : "30";
+    lastBuriedMode = buried;
+  }
+  syncAmbientUI();
+});
 
 $("langBtn").addEventListener("click", () => applyLanguage(lang === "fa" ? "en" : "fa"));
 
